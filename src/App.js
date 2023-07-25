@@ -707,41 +707,43 @@ function Portfolio() {
             <div className="mask">
               <div className="maskGrid"></div>
             </div>
-            {state.links.map((link, i) => 
-              link.type === 'section' && (
-                <div key={i} className="section">
-                  <div className="sectionTitle">{link.title}</div>
-                  <hr className="customHr"/>
-                  {link.sectionLinks.map((sectionLink, j) => {
-                    if (sectionLink.partiallyHyperlinked) {
-                      const [otherText, hyperlinkText] = sectionLink.text.split('Symphonia Fantastica #');
-                      return (
-                        <div key={j} className="linkWrapper partiallyHyperlinked">
-                          <span className="otherText">{otherText}</span>
-                          <a className="sectionLink" href={sectionLink.url} target="_blank" rel="noopener noreferrer">
-                            {'Symphonia Fantastica #' + (hyperlinkText || '')}
-                          </a>
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div key={j} className="linkWrapper">
-                          {sectionLink.url ?
+            <div className="contentWrapper">
+              {state.links.map((link, i) => 
+                link.type === 'section' && (
+                  <div key={i} className="section">
+                    <div className="sectionTitle">{link.title}</div>
+                    <hr className="customHr"/>
+                    {link.sectionLinks.map((sectionLink, j) => {
+                      if (sectionLink.partiallyHyperlinked) {
+                        const [otherText, hyperlinkText] = sectionLink.text.split('Symphonia Fantastica #');
+                        return (
+                          <div key={j} className="linkWrapper partiallyHyperlinked">
+                            <span className="otherText">{otherText}</span>
                             <a className="sectionLink" href={sectionLink.url} target="_blank" rel="noopener noreferrer">
-                              {sectionLink.text}
+                              {'Symphonia Fantastica #' + (hyperlinkText || '')}
                             </a>
-                            :
-                            <span className="sectionLink" onClick={() => handleClick(sectionLink.text)}>
-                              {sectionLink.text}
-                            </span>
-                          }
-                        </div>
-                      );
-                    }
-                  })}
-                </div>
-              )
-            )}
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div key={j} className="linkWrapper">
+                            {sectionLink.url ?
+                              <a className="sectionLink" href={sectionLink.url} target="_blank" rel="noopener noreferrer">
+                                {sectionLink.text}
+                              </a>
+                              :
+                              <span className="sectionLink" onClick={() => handleClick(sectionLink.text)}>
+                                {sectionLink.text}
+                              </span>
+                            }
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+                )
+              )}
+            </div>
           </div>
         }
         {state.cssTag && 
