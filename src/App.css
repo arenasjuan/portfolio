@@ -1,38 +1,618 @@
-.App {
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.app {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+  overflow: auto;
+}
+
+.app canvas {
+  position: fixed;
+  z-index: 1;
+  background-position: center;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Futura Book';
+  cursor: default;
+}
+
+.contactInfo {
+  position: absolute;
+  top: 2vh;
+  right: 4vw;
+  z-index: 10;
+  text-align: right;
+  color: #886413;
+}
+
+@font-face {
+  font-family: 'Futura Book';
+  src: url('./fonts/Futura Book font.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MuseumFoundry';
+  src: url('./fonts/MuseumFoundry.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Garamond';
+  src: url('./fonts/EBGaramond-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.Writing {
+  align-self: flex-start;
+  margin-left: 9vw;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.footerText {
+  z-index: 2;
+  letter-spacing: 1px;
+  cursor: default;
+  position: fixed;
+  bottom: 2.5vh;
+  right: 1vw;
+  font-family: "Garamond", serif;
+  text-align: right;
+  font-size: 1.35vw;
+  color: white;
+  text-shadow: 0vh -0.568vh 1.42vh black, -1.42vh -1.42vh 0.71vh black,  -0.426vh -0.426vh 2.84vh black,  -0.284vh -0.284vh 2.84vh black;
+  animation: fadeIn 0.8s ease-in;
+  opacity: 1;
+}
+
+
+.footerTextTop {
+  padding: 0.426vh;
+  padding-top: 0.426vh;
+  margin: 0.426vh;
+  margin-bottom: 0.5vh;
+  margin-left: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.writingContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+
+.divider {
+  padding: 0 2.5px;
+}
+
+.divider:hover {
+  cursor: default; /* Don't show the clickable cursor on hover */
+}
+
+.app .text,
+.app .links {
+  z-index: 2;
+  font-size: 3vw;
+  font-weight: bold;
+}
+
+.image {
+  width: 100%;
+}
+
+.text {
+  position: relative;
+  color: #886413;
+  font-size:28px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.transitionText {
+  cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.text span:hover:not(.divider) {
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app .back-button {
+  z-index: 2;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  font-family: 'Futura Book', sans-serif;
+  cursor: pointer;
+  position: absolute;
+  top: 2.27vh;
+  left: 2vw;
+  color: white;
+  font-size: 4.26vh;
+  text-shadow: 0px 0px 1px #000000, 0px 0px 2px #000000, 0px 0px 3px #000000, 0px 0px 4px #000000, 0px 0px 5px #000000, 0px 0px 6px #000000, 0px 0px 7px #000000;
+}
+
+.customHr,
+.codeBar {
+  width: 20vw;
+  height: 1px;
+  border: none;
+  margin: 0;
+}
+
+.customHr {
+  background-color: black;
+  margin-bottom: 1.5vh;
+}
+
+.codeBar {
+  background-color: white;
+  margin-bottom: 0px;
+}
+
+.sectionContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: flex-start;
+  justify-content: space-around;
+  height: 75vh;
+  width: 32vw;
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.35s ease-in forwards;
+  padding-top: 4.5vh;
+  padding-bottom: 6.5vh;
+  overflow: scroll;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 22vw;
+}
+
+.linksTitle {
+  font-size: 2.5vw;
+  text-align: left;
+  margin-left: 0.3vw;
+  margin-top:3vh;
+  color: peachpuff;
+  text-shadow: 0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  text-align: left;
+  color: #bf9b30;
+  text-shadow: 0px 0px 1px #000000, 0px 0px 2px #000000;
+  font-family: "Garamond", serif;
+}
+
+
+.linkWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 1vh;
+}
+
+.otherText {
+  color: #bf9b30;
+  font-size: 1rem;
+}
+
+.partiallyHyperlinked,
+.sectionLink {
+  font-family: "MuseumFoundry";
+  font-size: 1rem;
+  padding: 0;
+  text-decoration: none;
+  color: #bf4730;
+  font-style: italic;
+  text-shadow: 0px 0px 1px #000000, 0px 0px 2px #712a1c, -0.5px -1px 1px #000000;
+  text-align: left;
+  display: inline-block;
+  text-indent: -2em;
+  padding-left: 2em;
+  cursor: pointer;
+}
+
+
+@keyframes appear {
+  100% {
+    opacity: 1;
+  }
+}
+
+.unfurl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  animation: unfurl 1.2s 0.7s ease forwards;
+}
+
+@keyframes unfurl {
+  0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  100% { clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%); }
+}
+
+.mask {
+  position: absolute;
+  top: -8vh;
+  left: 0;
+  width: 100%;
+  height: 8vh;
+  overflow: hidden;
+  background-color: #BF8756;
+  animation: moveDown 1.2s 0.7s ease forwards, unfurl 1.2s 0.7s ease forwards;
+}
+
+.maskGrid {
+  width: 100%;
+  height: 150%;
+  background-size: 5px 5px;
+  background-image: repeating-linear-gradient(45deg, black, black 2px, transparent 2px, transparent 4px);
+}
+
+@keyframes spin {
+  0% { transform: rotateX(0deg) }
+  100% { transform: rotateX(90deg)  }
+}
+
+@keyframes moveDown {
+  0% { top: -8vh; }
+  100% { top: 90%; }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes show {
+  0% { display: none; }
+  100% { display: flex; }
+}
+
+
+.imageGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10vw, 1fr)); 
+  gap: 10px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-content: center;
+  width: 90vw;
+  overflow: auto;
+  cursor: default;
+  animation: fadeIn 0.8s ease-in;
+  opacity: 1;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  animation: fadeIn 1.5s ease-in;
+  opacity: 1;
+}
+
+
+.thumbnail {
+  width: 100%; 
+  object-fit: cover;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+}
+
+
+.shamu-container,
+.writingSample {
+    animation: fadeIn 0.4s ease-in;
+}
+
+.shamu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;  
+}
+
+.writingSample {
+  height: 80vh;
+  width: 40vw;
+  background-color: white;
+  overflow: scroll;
+  padding: 4vh;
+}
+
+.shamu-sample {
+  padding: 0;
+  height: 84vh;
+  width: 44vw;
+}
+
+.sample-container:not(.shamu-container) {
+  font-family: "Garamond", serif;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  line-height: 1.5;
+  aspect-ratio: 1/1;
+  gap: 2vh;
+}
+
+.shamu-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.shamu-image {
+  width: 100%;
+  height: 100%;
+}
+
+div.paragraph.mccartney-paragraph:nth-child(8),
+div.paragraph.mccartney-paragraph:nth-child(10),
+div.paragraph.newpresident-paragraph:nth-child(3) {
+    font-style: italic;
+}
+
+
+.codeLinks {
+  display: inline;
+  font-size: 1.3vw; 
+  text-shadow: 0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000;
+  color: #ff3c12;
+  text-decoration: none;
+  margin-top: 0px;
+
+}
+
+.codeDescriptions {
+  display: inline;
+  font-size: 1vw; 
   color: white;
+  text-shadow: 0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000;
+  cursor: default;
+  margin-top: 0px;
 }
 
-.App-link {
-  color: #61dafb;
+
+.sectionLink:hover,
+.links a:hover {
+  color: rgba(255, 255, 255, 0.7);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 100vw;
+  top: 10vh;
+  margin-bottom: 5vh;
+  padding: 4.26vh;
+  padding-top: 0;
+  cursor: default;
+  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0;   /* The initial opacity is set to 0 */
+  animation: fadeIn 0.3s ease-in forwards;   /* 'forwards' means the container will retain the style values from the last keyframe when the animation ends */
+  animation-delay: 0.7s;
+}
+
+.videoContainer {
+  cursor: default;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-width: 100vw;
+  padding: 0px;
+  animation: fadeIn 2.5s ease-in;
+  opacity: 1;
+  gap: 5vw;
+}
+
+/* targets video elements. */
+.videoContainer iframe {
+  width: 45vw;
+  height: 45vh;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.modal-navigation {
+  position: absolute;
+  display: flex; /* Added */
+  align-items: center; /* Added */
+  justify-content: center; /* Added */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-navigation button {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal-navigation button:first-child {
+  left: 5%;
+}
+
+.modal-navigation button:last-child {
+  right: 5%;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  font-size: 2em;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.tiktokContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* this allows the thumbnails to wrap into new rows as needed */
+  justify-content: center; /* adjust alignment as needed */
+  align-items: stretch; /* ensures that the children occupy full height of the row */
+  gap: 0.5em;
+  cursor: default;
+  width: 80vw;
+}
+
+.tiktokThumbnail {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  flex: 0 0 15%; /* flex-grow, flex-shrink, flex-basis: adjust this to change how much space each thumbnail should try to occupy */
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  animation: fadeIn 1.5s ease-in;
+  opacity: 1;
+}
+
+
+
+.tiktokThumbnail:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  transition: background-color 0.3s ease;
+}
+
+.tiktokThumbnail:hover:before {
+  background-color: transparent;
+}
+
+.tiktokThumbnail:hover .tiktokThumbnailText {
+  display: none;
+}
+
+.tiktokThumbnailText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: #fff;
+  font-size: 1.7vw;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.tiktokThumbnailText:hover:before {
+  background-color: transparent;
+}
+
+.modal-video {
+  position: relative;
+  width: 80%; 
+  height: 80%; 
+  max-width: 80vw;  /* these values may need to be adjusted */
+  max-height: 80vh; /* these values may need to be adjusted */
+}
+
+.modal-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
