@@ -88,6 +88,7 @@ function Portfolio() {
       "/images/inauguration.png",
       "/images/heyyou.png",
       "/images/seasons.png",
+      "/images/new_partner.png",
     ]).then(preloadedImages => {
       images.current = preloadedImages;
       setState({...state, backgroundImage: preloadedImages["/images/orange.png"]});
@@ -243,7 +244,8 @@ function Portfolio() {
             "My brushing skills come from my training. I was dropped into my first chimney as a baby, and whatever chimney-cleaning secrets didn’t come naturally to me were very quickly learned as I tumbled down that chimney. This was a rite of passage. What fell into that chimney was a baby, but what emerged was a man, covered in soot. We don’t know who that guy was, but I emerged right after him, a limbless baby covered in soot – and a damn-good sweeper.",
           ],
           links: [],
-          image: images.current["/images/chimney_sweep.JPG"],
+          image: images.current["/images/flesh.png"],
+          imageTop: images.current["/images/chimney_sweep.JPG"],
           backgroundImage: images.current["/images/monkey.png"]
         };
         break;
@@ -374,6 +376,7 @@ function Portfolio() {
           ],
           links: [],
           image: images.current["/images/flesh.png"],
+          imageTop: images.current["/images/new_partner.png"],
           backgroundImage: images.current["/images/monkey.png"]
         };
         break;
@@ -432,7 +435,6 @@ function Portfolio() {
             text: "",
             cssTag: "shamu",
             title: "",
-            paragraphs: [],
             links: [],
             image: images.current["/images/shamu.png"],
             backgroundImage: images.current["/images/monkey.png"]
@@ -447,6 +449,7 @@ function Portfolio() {
           linkTitle: "My Coding Projects",
           text: "",
           links: [
+            {label: 'This Site', url: 'https://github.com/arenasjuan/portfolio', description: ": See how the sausage is made!"},
             {label: 'Faces', url: 'https://github.com/arenasjuan/faces', description: ": A unique tool for exploring a user's personal taste by generating a composite face from that user's preferred facial images"},
             {label: 'Autoprint', url: 'https://github.com/arenasjuan/lambda-func-autoprint', description: ": AWS Lambda function that detects upon Shipstation shipment whether a customer has a document associated with their order, then searches for and prints that document from Dropbox"},
             {label: 'Shipstation Order Processor', url: 'https://github.com/arenasjuan/lambda-func-order_processor', description: ": AWS Lambda function that processes incoming Shipstation orders"},
@@ -743,23 +746,29 @@ function Portfolio() {
         }
         {state.cssTag && 
           <div className={`writingSample ${state.cssTag}-sample`}>
-            <div className={`sample-container ${state.cssTag}-container`}>
-              {state.title && 
-                <div className={`title ${state.cssTag}-title`}>
-                  {state.title}
-                </div>
-              }
-              {state.image && 
-                <img src={state.image.src} alt={state.name} className={`image ${state.cssTag}-image`} />
-              }
-              {state.paragraphs && state.paragraphs.map((paragraph, i) => 
-                <div key={i} className={`paragraph ${state.cssTag}-paragraph`}>
-                  {paragraph}
-                </div>
-              )}
-            </div>
+            {state.paragraphs && 
+              <div className={`sample-container ${state.cssTag}-container`}>
+                {state.title && 
+                  <div className={`title ${state.cssTag}-title`}>
+                    {state.title}
+                  </div>
+                }
+                {state.imageTop && 
+                  <img src={state.imageTop.src} alt={`${state.name} Top Image`} className={`image-top ${state.cssTag}-image-top`} />
+                }
+                {state.paragraphs.map((paragraph, i) => 
+                  <div key={i} className={`paragraph ${state.cssTag}-paragraph`}>
+                    {paragraph}
+                  </div>
+                )}
+              </div>
+            }
+            {state.image && 
+              <img src={state.image.src} alt={`${state.name} Right Image`} className={`image ${state.cssTag}-image`} />
+            }
           </div>
         }
+
         {state.name === 'Tiktoks' &&
           <div className="tiktokContainer">
             {state.links.filter(link => link.type === 'tiktok').map((link, i) => (

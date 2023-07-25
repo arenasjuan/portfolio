@@ -121,8 +121,15 @@ body, html {
 }
 
 .image {
-  width: 100%;
+  height: 100%; 
+  width: auto;
 }
+
+.image-top {
+  width: 100%;
+  height: auto;
+}
+
 
 .text {
   position: relative;
@@ -357,11 +364,17 @@ body, html {
 
 .writingSample {
   height: 80vh;
-  width: 40vw;
+  max-width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
-  overflow: scroll;
+  overflow: auto;
   padding: 4vh;
+  gap: 5vw;
+  flex-grow: 0;
 }
+
 
 .shamu-sample {
   padding: 0;
@@ -370,34 +383,28 @@ body, html {
 }
 
 .sample-container:not(.shamu-container) {
+  width: 40%;
+  height: 100%;
   font-family: "Garamond", serif;
   font-size: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: left;
+  justify-content: flex-start;
   text-align: left;
   line-height: 1.5;
-  aspect-ratio: 1/1;
   gap: 2vh;
-}
-
-.shamu-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  overflow-y: auto;
 }
 
 .shamu-image {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
-div.paragraph.mccartney-paragraph:nth-child(8),
-div.paragraph.mccartney-paragraph:nth-child(10),
-div.paragraph.newpresident-paragraph:nth-child(3) {
+div.paragraph.mccartney-paragraph:nth-child(7),
+div.paragraph.mccartney-paragraph:nth-child(9),
+div.paragraph.newpresident-paragraph:nth-child(2) {
     font-style: italic;
 }
 
