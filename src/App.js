@@ -91,7 +91,7 @@ function Portfolio() {
       "/images/new_partner.png",
     ]).then(preloadedImages => {
       images.current = preloadedImages;
-      setState({...state, backgroundImage: preloadedImages["/images/orange.png"]});
+      setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/orange.png"]}));
     });
   }, []);
 
@@ -130,7 +130,7 @@ function Portfolio() {
       return () => {
         window.removeEventListener('resize', handleResize);
       };
-    }, []);
+    }, [updateBackgroundSize]);
 
 
   useLayoutEffect(() => {
@@ -141,7 +141,7 @@ function Portfolio() {
       return () => {
         window.removeEventListener('resize', updateBackgroundSize);
       };
-    }, []);
+    }, [updateBackgroundSize]);
 
 
 
