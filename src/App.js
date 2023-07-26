@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { startTransition, preloadImages } from './dissolve.js';
 import './App.css';
-import './fonts/Futura Book font.ttf'
-
 
 function ImageContainer({ link, handleImageClick }) {
   return (
@@ -89,6 +87,7 @@ function Portfolio() {
       "/images/heyyou.jpg",
       "/images/seasons.jpg",
       "/images/new_partner.jpg",
+      "/images/ashes.jpg",
     ]).then(preloadedImages => {
       images.current = preloadedImages;
       setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/orange.jpg"]}));
@@ -205,6 +204,7 @@ function Portfolio() {
                 { text: 'Yo Mama So Fat'},
                 { text: 'No More Sheriffs'},
                 { text: 'New Partner'},
+                { text: 'Ashes'},
                 { text: 'Prison Ship'},
                 { text: 'Paul McCartney Hyping Himself Up Outside of Ricky’s Pub Before Naming The Beatles – July 14, 1958, Liverpool'},
                 { text: 'Shamu Comic'},
@@ -255,7 +255,7 @@ function Portfolio() {
             "(This piece served as the intro to a parody inauguration pamphlet that I distributed with the Lampoon at Trump’s inauguration in Washington, DC)",
             "Donald Hussein Trump was hatched December 7, 1941 in Jamaica, Queens, the Caribbean. Contrary to popular belief, Donald “the Donald” Trump was not born with his trademark hairstyle, though it was immediately grafted onto him by his father, Fred “the Donald” Trump, who had a phobia of bald people, or “the balds” (we no longer refer to baldos like this).",
             "Donald Rodham Trump was bullied severely as a child (these bullies will be discussed in the “Meet the Cabinet” section). It’s hard to imagine a world where someone would be ridiculed for having a dumb shitty name, or an ugly face, or stupid orange hair, or lips that look like the puckering of a sphincter, or eyes that look like the puckering of a sphincter, or oily off-white skin, or a fat ugly dead shit-breathed dad, or a puckered sphincter. Despite all this, Trump managed to abstain from alcohol and cigarettes, which made him also a pussy.",
-            "As a young adult, Donald Arial Trump attended Fordham University and the University of Pennsylvania, both now known as Trump University. He created his own major in what he called “No More Ethnic Studies”, now known as urban city planning. He also managed to dodge the draft by posing as a deformed poodle — you know the kind. He did this for the next 50 years.",
+            "As a young adult, Donald <span class='arial-word'>Arial</span> Trump attended Fordham University and the University of Pennsylvania, both now known as Trump University. He created his own major in what he called “No More Ethnic Studies”, now known as urban city planning. He also managed to dodge the draft by posing as a deformed poodle — you know the kind. He did this for the next 50 years.",
             "After college, Trump worked for his father’s company, doing the hard job of kicking minorities out of Trump apartment complexes and converting them into the gleaming, white-only drug dens you see today. This continued either until his father died or he ran out of minorities, but let’s not dwell on that. In either case he got a lot of money and his dad died.",
             "Trump inherited the Trump Organization and its holding company, Freddie Mo’ Bucks LLC, a Trump Company, and he turned his eye to his next get-rich-quick-at-the-expense-of-millions​​​​-of-significantly-less-affluent-Americans scheme: starting a family. He met his exotic, high-school educated wife, Kanye West, and they had five beautiful botched abortions: Jerry, Don Jr., Mungo, Barron, and Black Jerry. These are the faces that accompanied him on his historic, successful, slightly rape-y presidential campaign, delivering Donald “Get It Right — I’m Unfit for Service Only Because I’m a Poodle, Not a Goddamn Pacifist” Trump to the Oval Office.",
             "So give it up for your 45th President of the USA: Donlad “©” Tromp"
@@ -374,6 +374,52 @@ function Portfolio() {
           backgroundImage: images.current["/images/monkey.jpg"]
         };
         break;
+
+      case "Ashes":
+        newState = {
+          parent: "Writing",
+          name: "Ashes",
+          text: "",
+          cssTag: "ashes",
+          title: "Ashes",
+          paragraphs: [
+            "— Well hereeeee you go Mrs. Johnson -- your very own son’s ashes.",
+            "— Why, doctor, these ashes smell a bit… fishy.",
+            "— Haha, you dumb bastard. Do you kiss your son with that mouth? ‘Cause that’s very much who you’re holding.",
+            "— Doctor, this is...",
+            "EARLIER IN THIS PIECE",
+            "— Doctor I finished burning that beach kid.",
+            "— You did it all the way this time?",
+            "— Yep, to a crisp. No saliva left this time. Burned the shit out of him. He’s dead now if not before.",
+            "— Good because that was really gross when you gave me the ashes last time and it was just like a bag of spit. Got the ashes with you?",
+            "— Yup got ‘em right here in my trusty reusable tote.",
+            "— Whoa there, how big was this kid? This is easily five things of ashes.",
+            "— See, the kid was brought from the beach with this shark latched onto him. And I thought the shark was pregnant ‘cause it was so huge, so I cut it open and there were easily, and I’m not even shitting you doc, several other sharks attached to this kid that I hadn’t noticed.",
+            "— Don’t tell me you burned them. We can’t keep giving people animal ashes or animals alive.",
+            "— Come on doc, of course not -- if you’d let me finish, I was going to burn them with the kid and give them to the mom and lie about it and continue giving people animals for the rest of my life, but the sharks finished eating him as I held him in my hands, so I just had a palm full of sharks and no kid.",
+            "— No one is ever going to have your job here again.",
+            "— Boy was my face red, doc, believe me.",
+            "— I’m firing you and deleting this job.",
+            "— Anyway I ate the sharks and crushed up a bunch of drywall and aspirin, that’s what’s in my tote.",
+            "— This lady expects her son on her desk by the end of the day. What are we gonna do?",
+            "— Well I have some cat litter in my office, we could kill her other son and burn him instead.",
+            "Helloooooo, doctorrrrrr?",
+            "— Oh crud it’s his mom, oh man, oh shoot, awwww fuck. We can’t give her this dust you brought.",
+            "— Alright I’ll dump out the dust and lay in the bag and pretend to be her son",
+            "(Door opens)",
+            "— Well hereeeee you go Mrs. Johnson -- your very own son’s ashes.",
+            "— Why, doctor, these ashes smell a bit… fishy.",
+            "— Haha, you dumb bastard. Do you kiss your son with that mouth? ‘Cause that’s very much who you’re holding.",
+            "— Doctor, this is…",
+            "— (blinking real fast) Is something wrong?",
+            "— ... incredible. They look just like him. Thank you so much This is going on the mantle with the others."
+          ],
+          links: [],
+          image: images.current["/images/ashes.jpg"],
+          backgroundImage: images.current["/images/monkey.jpg"]
+        };
+        break;
+
 
       case "Prison Ship":
         newState = {
@@ -525,7 +571,7 @@ function Portfolio() {
         break;
 
       case "Comics":
-          const comics = Array.from({ length: 3 }, (_, i) => `/images/comics/Comic${i+1}.png`);
+          const comics = Array.from({ length: 3 }, (_, i) => `/images/comics/Comic${i+1}.jpg`);
 
           // Convert the list of wallpapers to the required format for the links array
           const comic_links = comics.map((url, i) => ({
@@ -543,7 +589,7 @@ function Portfolio() {
         break;
 
       case "Hidden QR Codes":
-          const qr_codes = Array.from({ length: 14 }, (_, i) => `/images/qr/qr ${i+1}.png`);
+          const qr_codes = Array.from({ length: 14 }, (_, i) => `/images/qr/qr ${i+1}.jpg`);
 
           // Convert the list of wallpapers to the required format for the links array
           const qr_links = qr_codes.map((url, i) => ({
@@ -561,7 +607,7 @@ function Portfolio() {
         break;
 
       case "Children's Show Concept Art":
-          const concepts = Array.from({ length: 11 }, (_, i) => `/images/concepts/concept ${i+1}.png`);
+          const concepts = Array.from({ length: 11 }, (_, i) => `/images/concepts/concept ${i+1}.jpg`);
 
           // Convert the list of wallpapers to the required format for the links array
           const concept_links = concepts.map((url, i) => ({
@@ -598,7 +644,7 @@ function Portfolio() {
           break;
 
       case "Product Images":
-          const products = Array.from({ length: 9 }, (_, i) => `/images/products/product 0${i+1}.png`);
+          const products = Array.from({ length: 9 }, (_, i) => `/images/products/product 0${i+1}.jpg`);
 
           // Convert the list of wallpapers to the required format for the links array
           const product_links = products.map((url, i) => ({
@@ -753,8 +799,7 @@ function Portfolio() {
                   <img src={state.imageTop.src} alt={`${state.name} Piece Illustration`} className={`image-top ${state.cssTag}-image-top`} />
                 }
                 {state.paragraphs.map((paragraph, i) => 
-                  <div key={i} className={`paragraph ${state.cssTag}-paragraph`}>
-                    {paragraph}
+                  <div key={i} className={`paragraph ${state.cssTag}-paragraph`} dangerouslySetInnerHTML={{ __html: paragraph }}>
                   </div>
                 )}
               </div>

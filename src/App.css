@@ -59,6 +59,13 @@ body, html {
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'GaramondBold';
+  src: url('./fonts/EBGaramond-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .Writing {
   align-self: flex-start;
   margin-left: 9vw;
@@ -184,7 +191,7 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 85vh;
+  height: 86vh;
   width: 32vw;
   background-size: 100% 100%;
   background-position: center;
@@ -405,18 +412,28 @@ div.linkWrapper:nth-child(10) > span:nth-child(1) {
   padding-right: 3vw;
 }
 
+div.paragraph.ashes-paragraph:nth-child(6) {
+  font-family: "GaramondBold", serif;
+  font-weight: bold;
+}
+
 .shamu-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
+div.paragraph.ashes-paragraph:nth-child(22),
+div.paragraph.ashes-paragraph:nth-child(25),
 div.paragraph.mccartney-paragraph:nth-child(7),
 div.paragraph.mccartney-paragraph:nth-child(9),
 div.paragraph.newpresident-paragraph:nth-child(2) {
     font-style: italic;
 }
 
+.arial-word {
+  font-family: Arial;
+}
 
 .codeLinks {
   display: inline;
