@@ -60,20 +60,19 @@ function Portfolio() {
   const appRef = useRef(null);
   const images = useRef({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  /* eslint-disable no-unused-vars */
   const [currentImage, setCurrentImage] = useState("");
   const [imageUrls, setImageUrls] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [videoModalIsOpen, setVideoModalIsOpen] = useState(false);
   const [currentVideoUrl, setCurrentVideoUrl] = useState("");
-  const [loadProgress, setLoadProgress] = useState(0); // Add loadProgress state
+  const [loadProgress, setLoadProgress] = useState(0);
 
-  /* eslint-disable no-unused-vars */
+  
   const preloadImages = async (urls) => {
     let loadedImages = {};
     let loadedCount = 0;
 
-    /* eslint-disable no-unused-vars */
+    
     for (const [index, url] of urls.entries()) {
       await new Promise((resolve, reject) => {
         const img = new Image();
@@ -312,13 +311,13 @@ function Portfolio() {
             "— Dad, he’s not even related to you. And I helped you murder 35 people.",
             "— Ishmael is the son of a weaver, can you believe it?",
             "— But I took out the Marino family for you. One 35-way intersection, one accident, no survivors.",
-            "— Well Ishmael would never kill 35 people.",
+            "— Well <span class='mob-word'>Ishmael</span> would never kill 35 people.",
             "— But Dad, you told me to. “Scour the city and spill the blood of the Marino pigs,” you said that.",
             "— What a nasty quote. Nothing like Don Ishmael’s many folksy quips and parables.",
             "— You can’t let Ishmael sit in your chair. He’s filthy – I think his nails are entirely made of mold.",
-            "— Those nails let him weave 7 baskets in 3 hours. Crazy, right? It’s crazy he can weave that fast?",
+            "— Those nails let him weave 7 baskets in <span class='mob-word'>3 hours</span>. Crazy, right? It’s crazy he can weave that fast?",
             "— Well I don’t see how baskets will help him peddle drugs or wipe out families.",
-            "— Oh, did I not mention each basket holds 1 gallon? Do you know how much that is, Tony?",
+            "— Oh, did I not mention each basket holds <span class='mob-word'>1 gallon</span>? Do you know how much that is, Tony?",
             "— Yes Dad that’s 7 gallons.",
             "— Every 3 hours! Ishmael, he is so humble about it. We could run the world with that kind of output.",
             "— No Dad. And I originally came to tell you that the police are here for us.",
@@ -326,7 +325,7 @@ function Portfolio() {
             "— The killing of 35 people and resulting traffic disruption.",
             "— What about Ishmael? Is he safe?",
             "— He isn’t complicit in mass-murder.",
-            "— Then the Familia is safe.",
+            "— Then the <span class='mob-word'>Familia</span> is safe.",
             "— We’re going to prison for life.",
             "— All the world will fear the Morettí Basket-Weavers."
           ],
@@ -372,7 +371,7 @@ function Portfolio() {
           "This train entered the town at approximately twenty-two hundred – and that’s pretty heavy for a train if you ask me. I’m not sure how it made it past the anti-train security we installed last year. Somehow it plowed through all 20,053 damsels tied up on the tracks, 1,085,768,231 damsels dressed as scarecrows, 9,999,999,999,999.97 damsels armed with water bottles to spray at the train’s whiskers, and the 3 Old Man Damsel’s Damsel Emporium franchises that we erected on the train tracks. At this point I should say that all the town’s women are also dead.",
           "After the six days it took for this evil train to sneak past our security, the sheriffs wasted no time getting to work – after all somebody had to enforce our Jim Crow laws. Once the sheriffs were back on the street all seemed at peace, what with the women gone. They couldn’t have possibly imagined the event that would rock our town and destroy the rule of law: the passing of the Civil Rights Act. Thank God that turned out to be a big prank and the sheriffs quickly caught the high schoolers responsible for it.",
           "Little did they know that those high schoolers were actually little train cars, which assembled into a larger train car, which called up a few train car friends and combined into a larger train, which was part of an even LARGER prank by the rival high school. The sheriffs arrested these hoodlums too, and it’s comforting to know how dedicated they were to the law before being plowed over, internally decapitated, dismembered, re-membered, dismembered again, and having their skin and sinew be twisted and ripped off by a hellish train at the conclusion of a large battle, metaphorically speaking.",
-          "The sheriffs decided to visit a bar in our neighboring town to celebrate the imprisonment of all those children. The next train there was fiery, gnarled, and covered in the blood of millions of women, as a result of our town’s poor train maintenance. They instead boarded the train after that which was the evil one. This was the last time they were seen alive, as shortly after their trip began they were struck by another unrelated train and quietly passed away. Sheriff Williams was the only survivor, but this morning, after a long battle with cancer, he was shot to death.",
+          "The sheriffs decided to visit a bar in our neighboring town to celebrate the imprisonment of all those children. The next train headed there was fiery, gnarled, and covered in the blood of millions of women, as a result of our town’s poor train maintenance. They instead boarded the train after that which was the evil one. This was the last time they were seen alive, as shortly after their trip began they were struck by another unrelated train and quietly passed away. Sheriff Williams was the only survivor, but this morning, after a long battle with cancer, he was shot to death.",
           "Things may seem dire, but know that we will get through this tough time, and the law will always live on in our town. That being said I have just been informed that Sheriff Sharif is dead. Thank you all for coming. God bless. USA USA USA."
         ],
         links: [],
@@ -425,7 +424,7 @@ function Portfolio() {
             "— Whoa there, how big was this kid? This is easily five things of ashes.",
             "— See, the kid was brought from the beach with this shark latched onto him. And I thought the shark was pregnant ‘cause it was so huge, so I cut it open and there were easily, and I’m not even shitting you doc, several other sharks attached to this kid that I hadn’t noticed.",
             "— Don’t tell me you burned them. We can’t keep giving people animal ashes or animals alive.",
-            "— Come on doc, of course not -- if you’d let me finish, I was going to burn them with the kid and give them to the mom and lie about it and continue giving people animals for the rest of my life, but the sharks finished eating him as I held him in my hands, so I just had a palm full of sharks and no kid.",
+            "— Come on doc, of course not -- if you’d let me finish, I was <span class='ashes-word'>going</span> to burn them with the kid and give them to the mom and lie about it and continue giving people animals for the rest of my life, but the sharks finished eating him as I held him in my hands, so I just had a palm full of sharks and no kid.",
             "— No one is ever going to have your job here again.",
             "— Boy was my face red, doc, believe me.",
             "— I’m firing you and deleting this job.",
@@ -441,7 +440,7 @@ function Portfolio() {
             "— Haha, you dumb bastard. Do you kiss your son with that mouth? ‘Cause that’s very much who you’re holding.",
             "— Doctor, this is…",
             "— (blinking real fast) Is something wrong?",
-            "— ... incredible. They look just like him. Thank you so much This is going on the mantle with the others."
+            "— ... incredible. They look just like him. Thank you so much. This is going on the mantle with the others."
           ],
           links: [],
           image: images.current["/images/ashes.jpg"],
