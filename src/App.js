@@ -525,7 +525,7 @@ function Portfolio() {
         break;
 
       case "Comics":
-          const comics = Array.from({ length: 3 }, (_, i) => `/images/comics/Comic ${i+1}.jpg`);
+          const comics = Array.from({ length: 3 }, (_, i) => `/images/comics/Comic${i+1}.jpg`);
 
           // Convert the list of wallpapers to the required format for the links array
           const comic_links = comics.map((url, i) => ({
