@@ -67,28 +67,28 @@ function Portfolio() {
   const [currentVideoUrl, setCurrentVideoUrl] = useState("");
   const [loadProgress, setLoadProgress] = useState(0); // Add loadProgress state
 
-  const preloadImages = (urls) => {
+  const preloadImages = async (urls) => {
     let loadedImages = {};
-    return Promise.all(
-      urls.map((url, index) => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => {
-            loadedImages[url] = img;
-            setLoadProgress((oldProgress) => {
-              const newProgress = ((index + 1) / urls.length) * 100;
-              return newProgress > oldProgress ? newProgress : oldProgress;
-            });
-            resolve(img);
-          };
-          img.onerror = reject;
-          img.src = url;
-          if (img.complete) {
-            img.onload();
-          }
-        });
-      })
-    ).then(() => loadedImages);
+    let loadedCount = 0;
+
+    for (const [index, url] of urls.entries()) {
+      await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          loadedImages[url] = img;
+          loadedCount++;
+          setLoadProgress((loadedCount / urls.length) * 100);
+          resolve(img);
+        };
+        img.onerror = reject;
+        img.src = url;
+        if (img.complete) {
+          img.onload();
+        }
+      });
+    }
+
+    return loadedImages;
   };
 
 
