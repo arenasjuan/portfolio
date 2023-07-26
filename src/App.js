@@ -69,14 +69,16 @@ function Portfolio() {
 
   const preloadImages = (urls) => {
     let loadedImages = {};
-    let loadedCount = 0;
     return Promise.all(
-      urls.map((url) => {
+      urls.map((url, index) => {
         return new Promise((resolve, reject) => {
           const img = new Image();
           img.onload = () => {
             loadedImages[url] = img;
-            loadedCount++;
+            setLoadProgress((oldProgress) => {
+              const newProgress = ((index + 1) / urls.length) * 100;
+              return newProgress > oldProgress ? newProgress : oldProgress;
+            });
             resolve(img);
           };
           img.onerror = reject;
@@ -86,12 +88,9 @@ function Portfolio() {
           }
         });
       })
-    )
-      .then(() => {
-        setLoadProgress((loadedCount / urls.length) * 100);
-        return loadedImages;
-      });
+    ).then(() => loadedImages);
   };
+
 
   useEffect(() => {
     preloadImages([
