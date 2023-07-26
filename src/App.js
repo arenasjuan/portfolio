@@ -60,6 +60,7 @@ function Portfolio() {
   const appRef = useRef(null);
   const images = useRef({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  /* eslint-disable no-unused-vars */
   const [currentImage, setCurrentImage] = useState("");
   const [imageUrls, setImageUrls] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -67,10 +68,12 @@ function Portfolio() {
   const [currentVideoUrl, setCurrentVideoUrl] = useState("");
   const [loadProgress, setLoadProgress] = useState(0); // Add loadProgress state
 
+  /* eslint-disable no-unused-vars */
   const preloadImages = async (urls) => {
     let loadedImages = {};
     let loadedCount = 0;
 
+    /* eslint-disable no-unused-vars */
     for (const [index, url] of urls.entries()) {
       await new Promise((resolve, reject) => {
         const img = new Image();
