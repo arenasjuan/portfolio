@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { startTransition, preloadImages } from './dissolve.js';
 import './App.css';
 import './fonts/Futura Book font.ttf'
@@ -57,12 +57,12 @@ function Portfolio() {
     backgroundImage: "/images/orange.png",
   };
   const [state, setState] = useState(initialState);
-  const [key, setKey] = useState(Math.random());
+  const key = useState(Math.random());
   const stateHistory = useRef([initialState]);
   const appRef = useRef(null);
   const images = useRef({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState("");
+  const setCurrentImage = useState("");
   const [imageUrls, setImageUrls] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [videoModalIsOpen, setVideoModalIsOpen] = useState(false);
@@ -71,7 +71,7 @@ function Portfolio() {
   useEffect(() => {
     preloadImages([
       "/images/orange.png",
-      "/images/pollock.png",
+      "/images/pollock.jpg",
       "/images/monkey.png",
       "/images/bot.png",
       "/images/biker.png",
@@ -95,55 +95,54 @@ function Portfolio() {
     });
   }, []);
 
-  // Function definition inside your component
-  const updateBackgroundSize = () => {
-    const canvas = appRef.current.querySelector('.dissolveCanvas');
+  const updateBackgroundSize = useCallback(() => {
+      const canvas = appRef.current.querySelector('.dissolveCanvas');
 
-    if (!canvas) {
-      return;
-    }
+      if (!canvas) {
+        return;
+      }
 
-    const viewportAspectRatio = window.innerWidth / window.innerHeight;
-    const canvasAspectRatio = canvas.width / canvas.height;
+      const viewportAspectRatio = window.innerWidth / window.innerHeight;
+      const canvasAspectRatio = canvas.width / canvas.height;
 
-    if (viewportAspectRatio > canvasAspectRatio) {
-      canvas.style.width = '100vw';
-      canvas.style.height = 'auto';
-    } else {
-      canvas.style.height = '100vh';
-      canvas.style.width = 'auto';
-    }
+      if (viewportAspectRatio > canvasAspectRatio) {
+        canvas.style.width = '100vw';
+        canvas.style.height = 'auto';
+      } else {
+        canvas.style.height = '100vh';
+        canvas.style.width = 'auto';
+      }
 
-    if ((canvas.style.width === '100vw' && canvas.offsetHeight < window.innerHeight) ||
-        (canvas.style.height === '100vh' && canvas.offsetWidth < window.innerWidth)) {
-      [canvas.style.width, canvas.style.height] = [canvas.style.height, canvas.style.width];
-    }
+      if ((canvas.style.width === '100vw' && canvas.offsetHeight < window.innerHeight) ||
+          (canvas.style.height === '100vh' && canvas.offsetWidth < window.innerWidth)) {
+        [canvas.style.width, canvas.style.height] = [canvas.style.height, canvas.style.width];
+      }
+    }, []);
 
-
-  };
 
   useEffect(() => {
-    const handleResize = () => {
-      updateBackgroundSize();
-    };
+      const handleResize = () => {
+        updateBackgroundSize();
+      };
 
-    window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [updateBackgroundSize]);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
 
 
   useLayoutEffect(() => {
-    updateBackgroundSize();
+      updateBackgroundSize();
 
-    window.addEventListener('resize', updateBackgroundSize);
+      window.addEventListener('resize', updateBackgroundSize);
 
-    return () => {
-      window.removeEventListener('resize', updateBackgroundSize);
-    };
-  }, []);  // empty dependency array to only run at the initial render
+      return () => {
+        window.removeEventListener('resize', updateBackgroundSize);
+      };
+    }, []);
+
 
 
   const handleImageClick = (url) => {
@@ -164,11 +163,6 @@ function Portfolio() {
   const handlePreviousImage = () => {
     setCurrentImageIndex(currentImageIndex - 1);
   }
-
-  function handleVideoModalClose() {
-    setVideoModalIsOpen(false);
-  }
-
 
   const handleClick = (section) => {
     const canvas = appRef.current.getElementsByTagName('canvas')[0];
@@ -458,7 +452,7 @@ function Portfolio() {
             {label: 'Slackbot', url: 'https://github.com/arenasjuan/slackbot', description: ": Slackbot that reprocesses Shipstation orders"},
             {label: 'SikeBot', url: 'https://github.com/arenasjuan/SikeBot', description: ": TwitterBot that generates and posts funny image macros at random intervals"},
           ],
-          backgroundImage: images.current["/images/pollock.png"],
+          backgroundImage: images.current["/images/pollock.jpg"],
           footerTextTop: "The Matrix",
           footerTextBottom: "(Jackson Pollock, 2002)",
         };
@@ -756,7 +750,7 @@ function Portfolio() {
                   </div>
                 }
                 {state.imageTop && 
-                  <img src={state.imageTop.src} alt={`${state.name} Top Image`} className={`image-top ${state.cssTag}-image-top`} />
+                  <img src={state.imageTop.src} alt={`${state.name} Piece Illustration`} className={`image-top ${state.cssTag}-image-top`} />
                 }
                 {state.paragraphs.map((paragraph, i) => 
                   <div key={i} className={`paragraph ${state.cssTag}-paragraph`}>
@@ -766,7 +760,7 @@ function Portfolio() {
               </div>
             }
             {state.image && 
-              <img src={state.image.src} alt={`${state.name} Right Image`} className={`image ${state.cssTag}-image`} />
+              <img src={state.image.src} alt={`${state.name} Magazine Cover`} className={`image ${state.cssTag}-image`} />
             }
           </div>
         }

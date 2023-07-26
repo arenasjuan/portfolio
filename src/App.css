@@ -237,11 +237,6 @@ div.section:nth-child(2) {
   margin-top: 1vh;
 }
 
-.otherText {
-  color: #bf9b30;
-  font-size: 1rem;
-}
-
 .partiallyHyperlinked,
 .sectionLink {
   font-family: "MuseumFoundry";
@@ -253,6 +248,7 @@ div.section:nth-child(2) {
   text-shadow: 0px 0px 1px #000000, 0px 0px 2px #712a1c, -0.5px -1px 1px #000000;
   text-align: left;
   display: inline-block;
+  cursor: pointer;
 }
 
 div.linkWrapper:nth-child(10) > span:nth-child(1) {
@@ -260,6 +256,11 @@ div.linkWrapper:nth-child(10) > span:nth-child(1) {
   padding-left: 2em;
 }
 
+.otherText {
+  color: #bf9b30;
+  font-size: 1rem;
+  cursor: default;
+}
 
 @keyframes appear {
   100% {
@@ -455,7 +456,7 @@ div.paragraph.newpresident-paragraph:nth-child(2) {
   cursor: default;
   background-color: rgba(0, 0, 0, 0.8);
   opacity: 0;  
-  animation: fadeIn 0.3s ease-in forwards;
+  animation: fadeIn 0.3s 0.5s ease-in forwards;
 }
 
 .videoContainer {
