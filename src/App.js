@@ -60,11 +60,38 @@ function Portfolio() {
   const appRef = useRef(null);
   const images = useRef({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const setCurrentImage = useState("");
+  const [currentImage, setCurrentImage] = useState("");
   const [imageUrls, setImageUrls] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [videoModalIsOpen, setVideoModalIsOpen] = useState(false);
   const [currentVideoUrl, setCurrentVideoUrl] = useState("");
+  const [loadProgress, setLoadProgress] = useState(0); // Add loadProgress state
+
+  const preloadImages = (urls) => {
+    let loadedImages = {};
+    let loadedCount = 0;
+    return Promise.all(
+      urls.map((url) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            loadedImages[url] = img;
+            loadedCount++;
+            resolve(img);
+          };
+          img.onerror = reject;
+          img.src = url;
+          if (img.complete) {
+            img.onload();
+          }
+        });
+      })
+    )
+      .then(() => {
+        setLoadProgress((loadedCount / urls.length) * 100);
+        return loadedImages;
+      });
+  };
 
   useEffect(() => {
     preloadImages([
@@ -92,7 +119,7 @@ function Portfolio() {
       images.current = preloadedImages;
       setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/orange.jpg"]}));
     });
-  }, []);
+  }, []); 
 
   const updateBackgroundSize = useCallback(() => {
       const canvas = appRef.current.querySelector('.dissolveCanvas');
@@ -706,6 +733,12 @@ function Portfolio() {
 
   return (
     <div key={key} ref={appRef} className="app">
+      {loadProgress < 100 ? (
+        <div className="loadingScreen">
+          Loading...
+          <progress value={loadProgress} max="100" />
+        </div>
+      ) : null}
       {state.text === "AI Art | Writing | Coding" && 
         <div className="contactInfo">
           <div>Juan Arenas</div>
