@@ -54,7 +54,7 @@ function Portfolio() {
   const initialState = {
     text: "AI Art | Writing | Coding",
     links: [],
-    backgroundImage: "/images/orange.png",
+    backgroundImage: "/images/orange.jpg",
   };
   const [state, setState] = useState(initialState);
   const key = useState(Math.random());
@@ -70,28 +70,28 @@ function Portfolio() {
 
   useEffect(() => {
     preloadImages([
-      "/images/orange.png",
+      "/images/orange.jpg",
       "/images/pollock.jpg",
-      "/images/monkey.png",
-      "/images/bot.png",
-      "/images/biker.png",
-      "/images/pics.png",
-      "/images/kids.png",
-      "/images/camera.png",
-      "/images/writing_background.png",
-      "/images/shamu.png",
+      "/images/monkey.jpg",
+      "/images/bot.jpg",
+      "/images/biker.jpg",
+      "/images/pics.jpg",
+      "/images/kids.jpg",
+      "/images/camera.jpg",
+      "/images/writing_background.jpg",
+      "/images/shamu.jpg",
       "/images/chimney_sweep.JPG",
-      "/images/flesh.png",
-      "/images/greener.png",
-      "/images/symphonia.png",
-      "/images/west.png",
-      "/images/inauguration.png",
-      "/images/heyyou.png",
-      "/images/seasons.png",
-      "/images/new_partner.png",
+      "/images/flesh.jpg",
+      "/images/greener.jpg",
+      "/images/symphonia.jpg",
+      "/images/west.jpg",
+      "/images/inauguration.jpg",
+      "/images/heyyou.jpg",
+      "/images/seasons.jpg",
+      "/images/new_partner.jpg",
     ]).then(preloadedImages => {
       images.current = preloadedImages;
-      setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/orange.png"]}));
+      setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/orange.jpg"]}));
     });
   }, []);
 
@@ -177,7 +177,7 @@ function Portfolio() {
           textColor: "#ffdb84",
           textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000",
           links: [],
-          backgroundImage: images.current["/images/bot.png"]
+          backgroundImage: images.current["/images/bot.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -218,7 +218,7 @@ function Portfolio() {
               ]
             }
           ],
-          backgroundImage: images.current["/images/monkey.png"]
+          backgroundImage: images.current["/images/monkey.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -238,9 +238,9 @@ function Portfolio() {
             "My brushing skills come from my training. I was dropped into my first chimney as a baby, and whatever chimney-cleaning secrets didn’t come naturally to me were very quickly learned as I tumbled down that chimney. This was a rite of passage. What fell into that chimney was a baby, but what emerged was a man, covered in soot. We don’t know who that guy was, but I emerged right after him, a limbless baby covered in soot – and a damn-good sweeper.",
           ],
           links: [],
-          image: images.current["/images/flesh.png"],
+          image: images.current["/images/flesh.jpg"],
           imageTop: images.current["/images/chimney_sweep.JPG"],
-          backgroundImage: images.current["/images/monkey.png"]
+          backgroundImage: images.current["/images/monkey.jpg"]
         };
         break;
 
@@ -261,8 +261,8 @@ function Portfolio() {
             "So give it up for your 45th President of the USA: Donlad “©” Tromp"
           ],
           links: [],
-          image: images.current["/images/inauguration.png"],
-          backgroundImage: images.current["/images/monkey.png"]
+          image: images.current["/images/inauguration.jpg"],
+          backgroundImage: images.current["/images/monkey.jpg"]
         };
         break;
 
@@ -302,8 +302,8 @@ function Portfolio() {
             "— All the world will fear the Morettí Basket-Weavers."
           ],
           links: [],
-          image: images.current["/images/west.png"],
-          backgroundImage: images.current["/images/monkey.png"]
+          image: images.current["/images/west.jpg"],
+          backgroundImage: images.current["/images/monkey.jpg"]
         };
         break;
 
@@ -325,8 +325,8 @@ function Portfolio() {
             "— Timmy, not even God’s arms are strong enough to lift that ass. Your mother is most certainly in Hell."
           ],
           links: [],
-          image: images.current["/images/heyyou.png"],
-          backgroundImage: images.current["/images/monkey.png"]
+          image: images.current["/images/heyyou.jpg"],
+          backgroundImage: images.current["/images/monkey.jpg"]
         };
         break;
 
@@ -347,8 +347,8 @@ function Portfolio() {
           "Things may seem dire, but know that we will get through this tough time, and the law will always live on in our town. That being said I have just been informed that Sheriff Sharif is dead. Thank you all for coming. God bless. USA USA USA."
         ],
         links: [],
-        image: images.current["/images/seasons.png"],
-        backgroundImage: images.current["/images/monkey.png"]
+        image: images.current["/images/seasons.jpg"],
+        backgroundImage: images.current["/images/monkey.jpg"]
       };
       break;
 
@@ -369,9 +369,9 @@ function Portfolio() {
             "I ask to meet Joe’s family – turns out he’s got none. He doesn’t even have a home, just spends his nights alternating between a security guard and a mannequin at this one clothing store. I try to comfort him, show him that his partner is all the family he needs. “It’s alright that you don’t have a family,” I tell him. “I probably would’ve shot them anyway.”"
           ],
           links: [],
-          image: images.current["/images/flesh.png"],
-          imageTop: images.current["/images/new_partner.png"],
-          backgroundImage: images.current["/images/monkey.png"]
+          image: images.current["/images/flesh.jpg"],
+          imageTop: images.current["/images/new_partner.jpg"],
+          backgroundImage: images.current["/images/monkey.jpg"]
         };
         break;
 
@@ -392,8 +392,8 @@ function Portfolio() {
             "Owning a prison ship is at least as enjoyable as owning a prison or a ship, but it’s definitely way less federally regulated. Could you imagine the Feds taxing an ocean-based prison? Raoul and I would be ruined."
           ],
           links: [],
-          image: images.current["/images/greener.png"],
-          backgroundImage: images.current["/images/monkey.png"]
+          image: images.current["/images/greener.jpg"],
+          backgroundImage: images.current["/images/monkey.jpg"]
         };
         break;
 
@@ -416,8 +416,8 @@ function Portfolio() {
               "Paul: No. No. Shut up. The band is going to be called the “Wittle Baby Buggies”. I came up with it as I was entering the pub. John. Mate. We’re going to be stars, mate."
             ],
             links: [],
-            image: images.current["/images/symphonia.png"],
-            backgroundImage: images.current["/images/monkey.png"]
+            image: images.current["/images/symphonia.jpg"],
+            backgroundImage: images.current["/images/monkey.jpg"]
           };
           break;
 
@@ -430,8 +430,8 @@ function Portfolio() {
             cssTag: "shamu",
             title: "",
             links: [],
-            image: images.current["/images/shamu.png"],
-            backgroundImage: images.current["/images/monkey.png"]
+            image: images.current["/images/shamu.jpg"],
+            backgroundImage: images.current["/images/monkey.jpg"]
         };
         break;
 
@@ -467,7 +467,7 @@ function Portfolio() {
           textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000, 1px -1px 1px #000000, -2px -2px 1px #000000, 0px 2px 6px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, 1px 1px 2px #000000, -1px -1px 2px #000000",
           links: [],
           textColor: 'white',
-          backgroundImage: images.current["/images/camera.png"]
+          backgroundImage: images.current["/images/camera.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -481,7 +481,7 @@ function Portfolio() {
             {text: "'Bike Matter' (Mashup and Animation)", url: 'https://www.youtube.com/embed/6qZA2B3uBtQ', type: 'video', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
             {text: "'Griffith' (Griffith Observatory Timelapse)", url: 'https://www.youtube.com/embed/SJFtzAoD_z4', type: 'video', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
           ],
-          backgroundImage: images.current["/images/biker.png"]
+          backgroundImage: images.current["/images/biker.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -505,7 +505,7 @@ function Portfolio() {
             {text: 'Jazz 1', url: 'https://youtube.com/embed/eQ4AcQJPnE4?feature=share', thumbnail: 'https://img.youtube.com/vi/eQ4AcQJPnE4/0.jpg', type: 'tiktok'},
             {text: 'Jazz 2', url: 'https://youtube.com/embed/2-YvCTA2zg8?feature=share', thumbnail: 'https://img.youtube.com/vi/2-YvCTA2zg8/0.jpg', type: 'tiktok'},
           ],
-          backgroundImage: images.current["/images/kids.png"]
+          backgroundImage: images.current["/images/kids.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -519,13 +519,13 @@ function Portfolio() {
           textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000",
           text: "Comics | Hidden QR Codes | Children's Show Concept Art | Wallpapers | Product Images",
           links: [],
-          backgroundImage: images.current["/images/pics.png"]
+          backgroundImage: images.current["/images/pics.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
 
       case "Comics":
-          const comics = Array.from({ length: 3 }, (_, i) => `/images/comics/Comic ${i+1}.png`);
+          const comics = Array.from({ length: 3 }, (_, i) => `/images/comics/Comic ${i+1}.jpg`);
 
           // Convert the list of wallpapers to the required format for the links array
           const comic_links = comics.map((url, i) => ({
@@ -538,7 +538,7 @@ function Portfolio() {
             name: "Comics",
             text: "",
             links: comic_links,
-            backgroundImage: images.current["/images/pics.png"]
+            backgroundImage: images.current["/images/pics.jpg"]
           };
         break;
 
@@ -556,7 +556,7 @@ function Portfolio() {
             name: "QR_Codes",
             text: "",
             links: qr_links,
-            backgroundImage: images.current["/images/pics.png"]
+            backgroundImage: images.current["/images/pics.jpg"]
           };
         break;
 
@@ -574,7 +574,7 @@ function Portfolio() {
             name: "Concept_Art",
             text: "",
             links: concept_links,
-            backgroundImage: images.current["/images/pics.png"]
+            backgroundImage: images.current["/images/pics.jpg"]
           };
         break;
 
@@ -593,7 +593,7 @@ function Portfolio() {
             name: "Wallpapers",
             text: "",
             links,
-            backgroundImage: images.current["/images/pics.png"]
+            backgroundImage: images.current["/images/pics.jpg"]
           };
           break;
 
@@ -611,7 +611,7 @@ function Portfolio() {
             name: "Products",
             text: "",
             links: product_links,
-            backgroundImage: images.current["/images/pics.png"]
+            backgroundImage: images.current["/images/pics.jpg"]
           };
         break;
 
@@ -696,8 +696,8 @@ function Portfolio() {
           </div>
         }
         {state.name === 'Writing' && 
-          <div className="sectionContainer" style={{backgroundImage: `url(${images.current["/images/writing_background.png"].src})`}}>
-            <div className="unfurl" style={{backgroundImage: `url(${images.current["/images/monkey.png"].src})`}}></div>
+          <div className="sectionContainer" style={{backgroundImage: `url(${images.current["/images/writing_background.jpg"].src})`}}>
+            <div className="unfurl" style={{backgroundImage: `url(${images.current["/images/monkey.jpg"].src})`}}></div>
             <div className="mask">
               <div className="maskGrid"></div>
             </div>

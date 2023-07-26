@@ -372,16 +372,15 @@ div.linkWrapper:nth-child(10) > span:nth-child(1) {
 }
 
 .writingSample {
-  height: 80vh;
-  max-width: 80vw;
+  height: 90vh;
+  max-width: 75vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background-color: white;
   overflow: auto;
-  padding: 4vh;
-  gap: 5vw;
-  flex-grow: 0;
+  padding: 4vh 3vw 4vh 3vw;
+  box-sizing: border-box;
 }
 
 
@@ -403,6 +402,7 @@ div.linkWrapper:nth-child(10) > span:nth-child(1) {
   line-height: 1.5;
   gap: 2vh;
   overflow-y: auto;
+  padding-right: 3vw;
 }
 
 .shamu-image {
