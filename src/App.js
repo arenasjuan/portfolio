@@ -181,7 +181,7 @@ function Portfolio() {
 
   function TikTokEmbed({ userId, videoId, isActive }) {
     return (
-      <iframe 
+      <iframe title="Tiktok Frame"
         src={`https://www.tiktok.com/embed/v2/${videoId}?lang=en-US`}
         height="100%"  
         frameBorder="0"
