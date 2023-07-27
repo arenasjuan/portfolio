@@ -118,8 +118,6 @@ function Portfolio() {
       "/images/seasons.jpg",
       "/images/new_partner.jpg",
       "/images/ashes.jpg",
-      "/images/tiktok_1.jpg",
-      "/images/tiktok_2.jpg",
       "/images/1falling.jpg",
       "/images/2falling.jpg",
     ]).then(preloadedImages => {
@@ -605,8 +603,8 @@ function Portfolio() {
           text: "",
           links: [
             // TikTok videos
-            {text: 'Studio Cat', videoId: '7247773989001563435', userId: 'juanmakestiktoks', type: 'tiktok', thumbnail: "/images/tiktok_1.jpg"},
-            {text: 'Bike Matter', videoId: '7251275338284551467', userId: 'juanmakestiktoks', type: 'tiktok', thumbnail: "/images/tiktok_2.jpg"},
+            {text: 'Studio Cat', videoId: '7247773989001563435', userId: 'juanmakestiktoks', type: 'tiktok'},
+            {text: 'Bike Matter', videoId: '7251275338284551467', userId: 'juanmakestiktoks', type: 'tiktok'},
             // YouTube videos
             {text: '1920s Oil', url: 'https://youtube.com/embed/dDGBdUvkybA?feature=share', thumbnail: 'https://img.youtube.com/vi/dDGBdUvkybA/0.jpg', type: 'youtube'},
             {text: 'Space Studio', url: 'https://youtube.com/embed/JPsjcZMWZ1Q?feature=share', thumbnail: 'https://img.youtube.com/vi/JPsjcZMWZ1Q/0.jpg', type: 'youtube'},

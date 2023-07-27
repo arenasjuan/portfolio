@@ -678,7 +678,7 @@ div.youtubeThumbnailContainer:nth-child(3) > div:nth-child(5) {
   width: 95vw;
   height: 75vh;
   opacity: 0;
-  animation: fadeIn 0.5s 0.7s ease-in forwards;
+  animation: fadeIn 0.8s 0.7s ease-in forwards;
   margin-bottom: 5vh;
   gap: 1vw;
 }
