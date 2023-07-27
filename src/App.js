@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { startTransition, preloadImages } from './dissolve.js';
 import './App.css';
+import { Helmet } from 'react-helmet';
+
 
 function ImageContainer({ link, handleImageClick }) {
   return (
@@ -66,6 +68,7 @@ function Portfolio() {
   const [videoModalIsOpen, setVideoModalIsOpen] = useState(false);
   const [currentVideoUrl, setCurrentVideoUrl] = useState("");
   const [loadProgress, setLoadProgress] = useState(0);
+  const [playingVideoId, setPlayingVideoId] = useState(null);
 
   
   const preloadImages = async (urls) => {
@@ -116,6 +119,10 @@ function Portfolio() {
       "/images/seasons.jpg",
       "/images/new_partner.jpg",
       "/images/ashes.jpg",
+      "/images/tiktok_1.jpg",
+      "/images/tiktok_2.jpg",
+      "/images/1falling.jpg",
+      "/images/2falling.jpg",
     ]).then(preloadedImages => {
       images.current = preloadedImages;
       setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/orange.jpg"]}));
@@ -146,6 +153,19 @@ function Portfolio() {
       }
     }, []);
 
+  useEffect(() => {
+    const script = document.createElement("script");
+
+    script.src = "https://www.tiktok.com/embed.js";
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
 
   useEffect(() => {
       const handleResize = () => {
@@ -158,6 +178,19 @@ function Portfolio() {
         window.removeEventListener('resize', handleResize);
       };
     }, [updateBackgroundSize]);
+
+
+  function TikTokEmbed({ userId, videoId, isActive }) {
+    return (
+      <iframe 
+        src={`https://www.tiktok.com/embed/v2/${videoId}?lang=en-US`}
+        height="100%"  
+        frameBorder="0"
+        allow="autoplay; fullscreen" 
+        allowFullScreen
+      />
+    );
+  }
 
 
   useLayoutEffect(() => {
@@ -182,6 +215,12 @@ function Portfolio() {
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
+
+  const handleThumbnailClick = (videoId) => {
+    setPlayingVideoId(videoId);
+    window.tiktokPixel && window.tiktokPixel();
+  };
+
 
   const handleNextImage = () => {
     setCurrentImageIndex(currentImageIndex + 1);
@@ -552,8 +591,8 @@ function Portfolio() {
           name: "LongVideos",
           text: "",
           links: [
-            {text: "'Bike Matter' (Mashup and Animation)", url: 'https://www.youtube.com/embed/6qZA2B3uBtQ', type: 'video', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
-            {text: "'Griffith' (Griffith Observatory Timelapse)", url: 'https://www.youtube.com/embed/SJFtzAoD_z4', type: 'video', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
+            {text: "'Bike Matter' (Mashup and Animation)", url: 'https://www.youtube.com/embed/6qZA2B3uBtQ', type: 'youtube', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
+            {text: "'Griffith' (Griffith Observatory Timelapse)", url: 'https://www.youtube.com/embed/SJFtzAoD_z4', type: 'youtube', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
           ],
           backgroundImage: images.current["/images/biker.jpg"]
         };
@@ -566,23 +605,27 @@ function Portfolio() {
           name: "Tiktoks",
           text: "",
           links: [
-            {text: 'Studio Cat', url: 'https://www.youtube.com/embed/obxHhlhcuHk', thumbnail: 'https://img.youtube.com/vi/obxHhlhcuHk/0.jpg', type: 'tiktok'},
-            {text: '1920s Oil', url: 'https://youtube.com/embed/dDGBdUvkybA?feature=share', thumbnail: 'https://img.youtube.com/vi/dDGBdUvkybA/0.jpg', type: 'tiktok'},
-            {text: 'Space Studio', url: 'https://youtube.com/embed/JPsjcZMWZ1Q?feature=share', thumbnail: 'https://img.youtube.com/vi/JPsjcZMWZ1Q/0.jpg', type: 'tiktok'},
-            {text: 'Alley Scene', url: 'https://youtube.com/embed/ctxUODexaH0?feature=share', thumbnail: 'https://img.youtube.com/vi/ctxUODexaH0/0.jpg', type: 'tiktok'},
-            {text: 'Gnome 1', url: 'https://youtube.com/embed/19gnjVwPhOk?feature=share', thumbnail: 'https://img.youtube.com/vi/19gnjVwPhOk/0.jpg', type: 'tiktok'},
-            {text: 'Flamenco Oil', url: 'https://youtube.com/embed/W2PTDCu1Avw?feature=share', thumbnail: 'https://img.youtube.com/vi/W2PTDCu1Avw/0.jpg', type: 'tiktok'},
-            {text: 'Graffiti Oil', url: 'https://youtube.com/embed/Pw2cGRHuQR4?feature=share', thumbnail: 'https://img.youtube.com/vi/Pw2cGRHuQR4/0.jpg', type: 'tiktok'},
-            {text: 'Franktok', url: 'https://www.youtube.com/embed/ahEJi6-LxD0', thumbnail: 'https://img.youtube.com/vi/ahEJi6-LxD0/0.jpg', type: 'tiktok'},
-            {text: 'Colosseum Concert 1', url: 'https://youtube.com/embed/XomIkS_saXQ?feature=share', thumbnail: 'https://img.youtube.com/vi/XomIkS_saXQ/0.jpg', type: 'tiktok'},
-            {text: 'Colosseum Concert 2', url: 'https://youtube.com/embed/qUyKF1YstFI?feature=share', thumbnail: 'https://img.youtube.com/vi/qUyKF1YstFI/0.jpg', type: 'tiktok'},
-            {text: 'Jazz 1', url: 'https://youtube.com/embed/eQ4AcQJPnE4?feature=share', thumbnail: 'https://img.youtube.com/vi/eQ4AcQJPnE4/0.jpg', type: 'tiktok'},
-            {text: 'Jazz 2', url: 'https://youtube.com/embed/2-YvCTA2zg8?feature=share', thumbnail: 'https://img.youtube.com/vi/2-YvCTA2zg8/0.jpg', type: 'tiktok'},
+            // TikTok videos
+            {text: 'Studio Cat', videoId: '7247773989001563435', userId: 'juanmakestiktoks', type: 'tiktok', thumbnail: "/images/tiktok_1.jpg"},
+            {text: 'Bike Matter', videoId: '7251275338284551467', userId: 'juanmakestiktoks', type: 'tiktok', thumbnail: "/images/tiktok_2.jpg"},
+            // YouTube videos
+            {text: '1920s Oil', url: 'https://youtube.com/embed/dDGBdUvkybA?feature=share', thumbnail: 'https://img.youtube.com/vi/dDGBdUvkybA/0.jpg', type: 'youtube'},
+            {text: 'Space Studio', url: 'https://youtube.com/embed/JPsjcZMWZ1Q?feature=share', thumbnail: 'https://img.youtube.com/vi/JPsjcZMWZ1Q/0.jpg', type: 'youtube'},
+            {text: 'Alley Scene', url: 'https://youtube.com/embed/ctxUODexaH0?feature=share', thumbnail: 'https://img.youtube.com/vi/ctxUODexaH0/0.jpg', type: 'youtube'},
+            {text: 'Gnome 1', url: 'https://youtube.com/embed/19gnjVwPhOk?feature=share', thumbnail: 'https://img.youtube.com/vi/19gnjVwPhOk/0.jpg', type: 'youtube'},
+            {text: 'Flamenco Oil', url: 'https://youtube.com/embed/W2PTDCu1Avw?feature=share', thumbnail: 'https://img.youtube.com/vi/W2PTDCu1Avw/0.jpg', type: 'youtube'},
+            {text: 'Graffiti Oil', url: 'https://youtube.com/embed/Pw2cGRHuQR4?feature=share', thumbnail: 'https://img.youtube.com/vi/Pw2cGRHuQR4/0.jpg', type: 'youtube'},
+            {text: 'Kids of Colombia', url: 'https://www.youtube.com/embed/_7BQwoYIRws', thumbnail: 'https://img.youtube.com/vi/_7BQwoYIRws/0.jpg', type: 'youtube'},
+            {text: 'Colosseum Concert 1', url: 'https://youtube.com/embed/XomIkS_saXQ?feature=share', thumbnail: 'https://img.youtube.com/vi/XomIkS_saXQ/0.jpg', type: 'youtube'},
+            {text: 'Colosseum Concert 2', url: 'https://youtube.com/embed/qUyKF1YstFI?feature=share', thumbnail: 'https://img.youtube.com/vi/qUyKF1YstFI/0.jpg', type: 'youtube'},
+            {text: 'Jazz 1', url: 'https://youtube.com/embed/eQ4AcQJPnE4?feature=share', thumbnail: 'https://img.youtube.com/vi/eQ4AcQJPnE4/0.jpg', type: 'youtube'},
+            {text: 'Jazz 2', url: 'https://youtube.com/embed/2-YvCTA2zg8?feature=share', thumbnail: 'https://img.youtube.com/vi/2-YvCTA2zg8/0.jpg', type: 'youtube'},
           ],
-          backgroundImage: images.current["/images/kids.jpg"]
+          backgroundImage: images.current["/images/2falling.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
+
 
 
       case "Images":
@@ -708,18 +751,24 @@ function Portfolio() {
     }
   }
 
-  function handleVideoClick(url) {
-    // format url if needed
-    let formattedUrl = url;
-    if (!url.includes("embed")) {
-      formattedUrl = url.replace("watch?v=", "embed/");
+
+  function handleTikTokClick(link) {
+    if (link.type === 'tiktok') {
+      const tiktokUrl = `https://www.tiktok.com/embed/v2/${link.videoId}?lang=en-US`;
+      setCurrentVideoUrl(tiktokUrl);
     }
-    setCurrentVideoUrl(formattedUrl);
+    setVideoModalIsOpen(true);
+  }
+
+
+  function handleVideoClick(link) {
+    setCurrentVideoUrl(link.type === 'youtube' ? link.url : `https://www.tiktok.com/embed/v2/${link.videoId}?lang=en-US`);
     setVideoModalIsOpen(true);
   }
 
 
   function VideoModal({ isOpen, url, onClose }) {
+    console.log('VideoModal rendered', { isOpen, url });
     return isOpen ? (
       <div className="modal">
         <div className="modal-content">
@@ -731,6 +780,7 @@ function Portfolio() {
       </div>
     ) : null;
   }
+
 
   return (
     <div key={key} ref={appRef} className="app">
@@ -767,7 +817,7 @@ function Portfolio() {
       <div className={`links ${state.name}`}>
         {state.name === 'LongVideos' && 
           <div className="videoContainer">
-            {state.links.filter(link => link.type === 'video').map((link, i) => (
+            {state.links.filter(link => link.type === 'youtube').map((link, i) => (
               <div key={i}>
                 <p style={{color: link.color, fontSize: link.size, textShadow: link.textShadow}}>{link.text}</p>
                 <iframe src={link.url} title={link.text} frameBorder="0" allowFullScreen />
@@ -843,19 +893,46 @@ function Portfolio() {
             }
           </div>
         }
-
         {state.name === 'Tiktoks' &&
           <div className="tiktokContainer">
-            {state.links.filter(link => link.type === 'tiktok').map((link, i) => (
-              <div key={i} 
-                className="tiktokThumbnail" 
-                onClick={() => handleVideoClick(link.url)} 
-                style={{backgroundImage: `url(${link.thumbnail})`}}>
-                <div className="tiktokThumbnailText">{link.text}</div>
-              </div>
-            ))}
+            <div className="youtubeThumbnailContainer">
+              {state.links.filter(link => link.type === 'youtube').slice(0, 5).map((link, i) => (
+                <div 
+                  key={i} 
+                  className="youtubeThumbnail" 
+                  style={{backgroundImage: `url(${link.thumbnail})`}}
+                  onClick={() => handleVideoClick(link)}
+                >
+                  <div className="youtubeThumbnailText">{link.text}</div>
+                </div>
+              ))}
+            </div>
+            <div className="tiktoks">
+              {state.links.filter(link => link.type === 'tiktok').map((link, i) => (
+                <div key={i} className="tiktokWrapper">
+                  <TikTokEmbed key={link.videoId} userId={link.userId} videoId={link.videoId} text={link.text} />
+                  <div className="tiktokOverlayContainer" onClick={() => handleTikTokClick(link)}>
+                    <div className="tiktokOverlay" style={{backgroundImage: `url(${images.current["/images/1falling.jpg"].src})`}}></div>
+                    <div className="tiktokText">{link.text}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="youtubeThumbnailContainer">
+              {state.links.filter(link => link.type === 'youtube').slice(5, 10).map((link, i) => (
+                <div 
+                  key={i} 
+                  className="youtubeThumbnail" 
+                  style={{backgroundImage: `url(${link.thumbnail})`}}
+                  onClick={() => handleVideoClick(link)}
+                >
+                  <div className="youtubeThumbnailText">{link.text}</div>
+                </div>
+              ))}
+            </div>
           </div>
         }
+
       {state.parent === 'Images' &&
           <div className={`imageGallery ${state.name}`}>
             {state.links.filter(link => link.type === 'image').map((link, i) => (

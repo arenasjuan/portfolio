@@ -214,7 +214,7 @@ body, html {
   background-size: 100% 100%;
   background-position: center;
   opacity: 0;
-  animation: fadeIn 0.5s 0.35s ease-in forwards;
+  animation: fadeIn 0.2s 0.2s ease-in forwards;
   padding: 10% 15% 10% 15%;
   box-sizing: border-box;
 }
@@ -302,7 +302,7 @@ div.linkWrapper:nth-child(11) > span:nth-child(1) {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  animation: unfurl 1.2s 0.7s ease forwards;
+  animation: unfurl 0.7s 0.35s ease forwards;
 }
 
 @keyframes unfurl {
@@ -318,7 +318,7 @@ div.linkWrapper:nth-child(11) > span:nth-child(1) {
   height: 8vh;
   overflow: hidden;
   background-color: #BF8756;
-  animation: moveDown 1.2s 0.7s ease forwards, unfurl 1.2s 0.7s ease forwards;
+  animation: moveDown 0.7s 0.35s ease forwards, unfurl 0.7s 0.35s ease forwards;
 }
 
 .maskGrid {
@@ -373,14 +373,6 @@ div.linkWrapper:nth-child(11) > span:nth-child(1) {
   opacity: 1;
 }
 
-
-.thumbnail {
-  width: 100%; 
-  object-fit: cover;
-  padding: 0px;
-  margin: 0px;
-  cursor: pointer;
-}
 
 
 .shamu-container,
@@ -499,6 +491,21 @@ div.paragraph.newpresident-paragraph:nth-child(2) {
   animation: fadeIn 0.3s 0.5s ease-in forwards;
 }
 
+.thumbnail {
+  width: 100%; 
+  object-fit: cover;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
 .videoContainer {
   cursor: default;
   display: flex;
@@ -595,33 +602,31 @@ div.paragraph.newpresident-paragraph:nth-child(2) {
   cursor: pointer;
 }
 
-
-.tiktokContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; 
-  justify-content: center; 
-  align-items: stretch; 
-  gap: 0.5em;
-  cursor: default;
-  width: 80vw;
+.youtubeThumbnailContainer {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  height: 60%; 
+  text-align: center;
+  flex: 0.5;
 }
 
-.tiktokThumbnail {
+
+.youtubeThumbnail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
+  width: 11vw;
+  height: 11vw;
+  cursor: pointer;
   background-size: cover;
   background-position: center;
-  overflow: hidden;
-  flex: 0 0 15%;
-  aspect-ratio: 1 / 1;
-  cursor: pointer;
-  animation: fadeIn 1.5s ease-in;
-  opacity: 1;
+  background-repeat: no-repeat;
 }
 
-
-
-.tiktokThumbnail:before {
+.youtubeThumbnail::before {
   content: '';
   display: block;
   position: absolute;
@@ -629,32 +634,115 @@ div.paragraph.newpresident-paragraph:nth-child(2) {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.45);
-  transition: background-color 0.3s ease;
+  background-image: url("/public/images/1falling.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 1; 
+  transition: opacity 0.3s ease;
 }
 
-.tiktokThumbnail:hover:before {
+.youtubeThumbnail:hover::before {
+  opacity: 0;
+}
+
+
+.youtubeThumbnailText {
+  color: white;
+  font-size: 1.7vw;
+  text-shadow: 0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000, 0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000, 0px 0px 1px #000000, 0px 3px 2px #000000, -2px 3px 4px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000, 0px 2px 1px #000000, -1px 0px 1px #000000, 1px 0px 1px #000000, 1px 0px 2px #000000;;
+  z-index: 1;
+}
+
+.youtubeThumbnail:hover:before {
   background-color: transparent;
 }
 
-.tiktokThumbnail:hover .tiktokThumbnailText {
+.youtubeThumbnail:hover .youtubeThumbnailText {
   display: none;
 }
 
-.tiktokThumbnailText {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  color: #fff;
-  font-size: 1.7vw;
-  text-shadow: 2px 2px 4px #000000;
-}
-
-.tiktokThumbnailText:hover:before {
+.youtubeThumbnailText:hover:before {
   background-color: transparent;
 }
+
+div.youtubeThumbnailContainer:nth-child(1) > div:nth-child(5),
+div.youtubeThumbnailContainer:nth-child(3) > div:nth-child(5) {
+  left: 55%;
+}
+
+
+.tiktokContainer {
+  display: flex;
+  flex-direction: row;
+  width: 95vw;
+  height: 75vh;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.7s ease-in forwards;
+  margin-bottom: 5vh;
+  gap: 1vw;
+}
+
+.tiktokContainer:first-child {
+  margin-left: auto;
+}
+
+.tiktokContainer:last-child {
+  margin-right: auto;
+}
+
+.youtubeThumbnailContainer > * {
+  margin: auto;
+}
+
+.tiktoks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: calc(75vh * 0.99);
+  flex: 1;
+}
+
+.tiktokWrapper {
+  position: relative;
+  height: 100%;
+  background-color: black;
+}
+
+.tiktokOverlayContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.tiktokOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.tiktokText {
+  position: relative;
+  color: white;
+  font-size: 3vw;
+  text-shadow: 0px 0px 1px #000000, 0px 3px 2px #000000, -2px 3px 4px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000, 0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000, 0px 0px 1px #000000, 0px 3px 2px #000000, -2px 3px 4px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000, 0px 0px 1px #000000, 0px 3px 2px #000000, -2px 3px 4px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000, 0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000, 0px 0px 1px #000000, 0px 3px 2px #000000, -2px 3px 4px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000;
+  z-index: 1;
+  top: 45%;
+}
+
+.tiktokWrapper:hover .tiktokOverlayContainer {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 
 .modal-video {
   position: relative;
@@ -670,4 +758,18 @@ div.paragraph.newpresident-paragraph:nth-child(2) {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+div.css-vptvdy.e1b4x27k1{
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+body #root #main.css-1dhgbe8.e1k35x2c0 #embed-video-container.css-g03djc.e1osuh9m0 {
+  background: black;
+}
+
+#embed-video-container {
+  background-color: black;
 }
