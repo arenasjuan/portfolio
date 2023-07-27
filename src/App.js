@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { startTransition, preloadImages } from './dissolve.js';
 import './App.css';
-import { Helmet } from 'react-helmet';
 
 
 function ImageContainer({ link, handleImageClick }) {
