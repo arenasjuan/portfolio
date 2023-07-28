@@ -53,7 +53,7 @@ function Portfolio() {
   const initialState = {
     text: "AI Art | Writing | Coding",
     links: [],
-    backgroundImage: "/images/orange.jpg",
+    backgroundImage: "/images/canvases/orange.jpg",
   };
   const [state, setState] = useState(initialState);
   const key = useState(Math.random());
@@ -98,31 +98,41 @@ function Portfolio() {
 
   useEffect(() => {
     preloadImages([
-      "/images/orange.jpg",
-      "/images/pollock.jpg",
-      "/images/monkey.jpg",
-      "/images/bot.jpg",
-      "/images/biker.jpg",
-      "/images/pics.jpg",
-      "/images/kids.jpg",
-      "/images/camera.jpg",
-      "/images/writing_background.jpg",
-      "/images/shamu.jpg",
-      "/images/chimney_sweep.JPG",
-      "/images/flesh.jpg",
-      "/images/greener.jpg",
-      "/images/symphonia.jpg",
-      "/images/west.jpg",
-      "/images/inauguration.jpg",
-      "/images/heyyou.jpg",
-      "/images/seasons.jpg",
-      "/images/new_partner.jpg",
-      "/images/ashes.jpg",
-      "/images/1falling.jpg",
-      "/images/2falling.jpg",
+      "/images/canvases/orange.jpg",
+      "/images/canvases/pollock.jpg",
+      "/images/canvases/monkey.jpg",
+      "/images/canvases/bot.jpg",
+      "/images/canvases/biker.jpg",
+      "/images/canvases/pics.jpg",
+      "/images/canvases/kids.jpg",
+      "/images/canvases/camera.jpg",
+      "/images/writing/writing_background.jpg",
+      "/images/writing/shamu.jpg",
+      "/images/writing/chimney_sweep.JPG",
+      "/images/writing/flesh.jpg",
+      "/images/writing/greener.jpg",
+      "/images/writing/symphonia.jpg",
+      "/images/writing/west.jpg",
+      "/images/writing/inauguration.jpg",
+      "/images/writing/heyyou.jpg",
+      "/images/writing/seasons.jpg",
+      "/images/writing/new_partner.jpg",
+      "/images/writing/ashes.jpg",
+      "/images/canvases/1falling.jpg",
+      "/images/canvases/2falling.jpg",
+      "/images/thumbnails/1920s.jpg",
+      "/images/thumbnails/alley.jpg",
+      "/images/thumbnails/studio.jpg",
+      "/images/thumbnails/gnome.jpg",
+      "/images/thumbnails/flamenco.jpg",
+      "/images/thumbnails/graffiti.jpg",
+      "/images/thumbnails/colombia.jpg",
+      "/images/thumbnails/colosseum_1.jpg",
+      "/images/thumbnails/colosseum_2.jpg",
+      "/images/thumbnails/jazz_1.jpg",
     ]).then(preloadedImages => {
       images.current = preloadedImages;
-      setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/orange.jpg"]}));
+      setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/canvases/orange.jpg"]}));
     });
   }, []); 
 
@@ -164,22 +174,9 @@ function Portfolio() {
   }, []);
 
 
-  useEffect(() => {
-      const handleResize = () => {
-        updateBackgroundSize();
-      };
-
-      window.addEventListener('resize', handleResize);
-
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    }, [updateBackgroundSize]);
-
-
   function TikTokEmbed({ userId, videoId, isActive }) {
     return (
-      <iframe title="Tiktok Frame"
+      <iframe title="TiktokFrame"
         src={`https://www.tiktok.com/embed/v2/${videoId}?lang=en-US`}
         height="100%"  
         frameBorder="0"
@@ -240,7 +237,7 @@ function Portfolio() {
           textColor: "#ffdb84",
           textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000",
           links: [],
-          backgroundImage: images.current["/images/bot.jpg"]
+          backgroundImage: images.current["/images/canvases/bot.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -282,7 +279,7 @@ function Portfolio() {
               ]
             }
           ],
-          backgroundImage: images.current["/images/monkey.jpg"]
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -302,9 +299,9 @@ function Portfolio() {
             "My brushing skills come from my training. I was dropped into my first chimney as a baby, and whatever chimney-cleaning secrets didn’t come naturally to me were very quickly learned as I tumbled down that chimney. This was a rite of passage. What fell into that chimney was a baby, but what emerged was a man, covered in soot. We don’t know who that guy was, but I emerged right after him, a limbless baby covered in soot – and a damn-good sweeper.",
           ],
           links: [],
-          image: images.current["/images/flesh.jpg"],
-          imageTop: images.current["/images/chimney_sweep.JPG"],
-          backgroundImage: images.current["/images/monkey.jpg"]
+          image: images.current["/images/writing/flesh.jpg"],
+          imageTop: images.current["/images/writing/chimney_sweep.JPG"],
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
 
@@ -325,8 +322,8 @@ function Portfolio() {
             "So give it up for your 45th President of the USA: Donlad “©” Tromp"
           ],
           links: [],
-          image: images.current["/images/inauguration.jpg"],
-          backgroundImage: images.current["/images/monkey.jpg"]
+          image: images.current["/images/writing/inauguration.jpg"],
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
 
@@ -366,8 +363,8 @@ function Portfolio() {
             "— All the world will fear the Morettí Basket-Weavers."
           ],
           links: [],
-          image: images.current["/images/west.jpg"],
-          backgroundImage: images.current["/images/monkey.jpg"]
+          image: images.current["/images/writing/west.jpg"],
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
 
@@ -389,8 +386,8 @@ function Portfolio() {
             "— Timmy, not even God’s arms are strong enough to lift that ass. Your mother is most certainly in Hell."
           ],
           links: [],
-          image: images.current["/images/heyyou.jpg"],
-          backgroundImage: images.current["/images/monkey.jpg"]
+          image: images.current["/images/writing/heyyou.jpg"],
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
 
@@ -411,8 +408,8 @@ function Portfolio() {
           "Things may seem dire, but know that we will get through this tough time, and the law will always live on in our town. That being said I have just been informed that Sheriff Sharif is dead. Thank you all for coming. God bless. USA USA USA."
         ],
         links: [],
-        image: images.current["/images/seasons.jpg"],
-        backgroundImage: images.current["/images/monkey.jpg"]
+        image: images.current["/images/writing/seasons.jpg"],
+        backgroundImage: images.current["/images/canvases/monkey.jpg"]
       };
       break;
 
@@ -433,9 +430,9 @@ function Portfolio() {
             "I ask to meet Joe’s family – turns out he’s got none. He doesn’t even have a home, just spends his nights alternating between a security guard and a mannequin at this one clothing store. I try to comfort him, show him that his partner is all the family he needs. “It’s alright that you don’t have a family,” I tell him. “I probably would’ve shot them anyway.”"
           ],
           links: [],
-          image: images.current["/images/flesh.jpg"],
-          imageTop: images.current["/images/new_partner.jpg"],
-          backgroundImage: images.current["/images/monkey.jpg"]
+          image: images.current["/images/writing/flesh.jpg"],
+          imageTop: images.current["/images/writing/new_partner.jpg"],
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
 
@@ -479,8 +476,8 @@ function Portfolio() {
             "— ... incredible. They look just like him. Thank you so much. This is going on the mantle with the others."
           ],
           links: [],
-          image: images.current["/images/ashes.jpg"],
-          backgroundImage: images.current["/images/monkey.jpg"]
+          image: images.current["/images/writing/ashes.jpg"],
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
 
@@ -502,8 +499,8 @@ function Portfolio() {
             "Owning a prison ship is at least as enjoyable as owning a prison or a ship, but it’s definitely way less federally regulated. Could you imagine the Feds taxing an ocean-based prison? Raoul and I would be ruined."
           ],
           links: [],
-          image: images.current["/images/greener.jpg"],
-          backgroundImage: images.current["/images/monkey.jpg"]
+          image: images.current["/images/writing/greener.jpg"],
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
 
@@ -526,8 +523,8 @@ function Portfolio() {
               "Paul: No. No. Shut up. The band is going to be called the “Wittle Baby Buggies”. I came up with it as I was entering the pub. John. Mate. We’re going to be stars, mate."
             ],
             links: [],
-            image: images.current["/images/symphonia.jpg"],
-            backgroundImage: images.current["/images/monkey.jpg"]
+            image: images.current["/images/writing/symphonia.jpg"],
+            backgroundImage: images.current["/images/canvases/monkey.jpg"]
           };
           break;
 
@@ -540,8 +537,8 @@ function Portfolio() {
             cssTag: "shamu",
             title: "",
             links: [],
-            image: images.current["/images/shamu.jpg"],
-            backgroundImage: images.current["/images/monkey.jpg"]
+            image: images.current["/images/writing/shamu.jpg"],
+            backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
 
@@ -562,7 +559,7 @@ function Portfolio() {
             {label: 'Slackbot', url: 'https://github.com/arenasjuan/slackbot', description: ": Slackbot that reprocesses Shipstation orders"},
             {label: 'SikeBot', url: 'https://github.com/arenasjuan/SikeBot', description: ": TwitterBot that generates and posts funny image macros at random intervals"},
           ],
-          backgroundImage: images.current["/images/pollock.jpg"],
+          backgroundImage: images.current["/images/canvases/pollock.jpg"],
           footerTextTop: "The Matrix",
           footerTextBottom: "(Jackson Pollock, 2002)",
         };
@@ -577,7 +574,7 @@ function Portfolio() {
           textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000, 1px -1px 1px #000000, -2px -2px 1px #000000, 0px 2px 6px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, 1px 1px 2px #000000, -1px -1px 2px #000000",
           links: [],
           textColor: 'white',
-          backgroundImage: images.current["/images/camera.jpg"]
+          backgroundImage: images.current["/images/canvases/camera.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -591,7 +588,7 @@ function Portfolio() {
             {text: "'Bike Matter' (Mashup and Animation)", url: 'https://www.youtube.com/embed/6qZA2B3uBtQ', type: 'youtube', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
             {text: "'Griffith' (Griffith Observatory Timelapse)", url: 'https://www.youtube.com/embed/SJFtzAoD_z4', type: 'youtube', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
           ],
-          backgroundImage: images.current["/images/biker.jpg"]
+          backgroundImage: images.current["/images/canvases/biker.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -606,19 +603,18 @@ function Portfolio() {
             {text: 'Studio Cat', videoId: '7247773989001563435', userId: 'juanmakestiktoks', type: 'tiktok'},
             {text: 'Bike Matter', videoId: '7251275338284551467', userId: 'juanmakestiktoks', type: 'tiktok'},
             // YouTube videos
-            {text: '1920s Oil', url: 'https://youtube.com/embed/dDGBdUvkybA?feature=share', thumbnail: 'https://img.youtube.com/vi/dDGBdUvkybA/0.jpg', type: 'youtube'},
-            {text: 'Space Studio', url: 'https://youtube.com/embed/JPsjcZMWZ1Q?feature=share', thumbnail: 'https://img.youtube.com/vi/JPsjcZMWZ1Q/0.jpg', type: 'youtube'},
-            {text: 'Alley Scene', url: 'https://youtube.com/embed/ctxUODexaH0?feature=share', thumbnail: 'https://img.youtube.com/vi/ctxUODexaH0/0.jpg', type: 'youtube'},
-            {text: 'Gnome 1', url: 'https://youtube.com/embed/19gnjVwPhOk?feature=share', thumbnail: 'https://img.youtube.com/vi/19gnjVwPhOk/0.jpg', type: 'youtube'},
-            {text: 'Flamenco Oil', url: 'https://youtube.com/embed/W2PTDCu1Avw?feature=share', thumbnail: 'https://img.youtube.com/vi/W2PTDCu1Avw/0.jpg', type: 'youtube'},
-            {text: 'Graffiti Oil', url: 'https://youtube.com/embed/Pw2cGRHuQR4?feature=share', thumbnail: 'https://img.youtube.com/vi/Pw2cGRHuQR4/0.jpg', type: 'youtube'},
-            {text: 'Kids of Colombia', url: 'https://www.youtube.com/embed/_7BQwoYIRws', thumbnail: 'https://img.youtube.com/vi/_7BQwoYIRws/0.jpg', type: 'youtube'},
-            {text: 'Colosseum Concert 1', url: 'https://youtube.com/embed/XomIkS_saXQ?feature=share', thumbnail: 'https://img.youtube.com/vi/XomIkS_saXQ/0.jpg', type: 'youtube'},
-            {text: 'Colosseum Concert 2', url: 'https://youtube.com/embed/qUyKF1YstFI?feature=share', thumbnail: 'https://img.youtube.com/vi/qUyKF1YstFI/0.jpg', type: 'youtube'},
-            {text: 'Jazz 1', url: 'https://youtube.com/embed/eQ4AcQJPnE4?feature=share', thumbnail: 'https://img.youtube.com/vi/eQ4AcQJPnE4/0.jpg', type: 'youtube'},
-            {text: 'Jazz 2', url: 'https://youtube.com/embed/2-YvCTA2zg8?feature=share', thumbnail: 'https://img.youtube.com/vi/2-YvCTA2zg8/0.jpg', type: 'youtube'},
+            {text: '1920s Oil', url: 'https://youtube.com/embed/dDGBdUvkybA?feature=share', thumbnail: "/images/thumbnails/1920s.jpg", type: 'youtube'},
+            {text: 'Space Studio', url: 'https://youtube.com/embed/JPsjcZMWZ1Q?feature=share', thumbnail: "/images/thumbnails/studio.jpg", type: 'youtube'},
+            {text: 'Alley Scene', url: 'https://youtube.com/embed/ctxUODexaH0?feature=share', thumbnail: "/images/thumbnails/alley.jpg", type: 'youtube'},
+            {text: 'Gnome 1', url: 'https://youtube.com/embed/19gnjVwPhOk?feature=share', thumbnail: "/images/thumbnails/gnome.jpg", type: 'youtube'},
+            {text: 'Flamenco Oil', url: 'https://youtube.com/embed/W2PTDCu1Avw?feature=share', thumbnail: "/images/thumbnails/flamenco.jpg", type: 'youtube'},
+            {text: 'Graffiti Oil', url: 'https://youtube.com/embed/Pw2cGRHuQR4?feature=share', thumbnail: "/images/thumbnails/graffiti.jpg", type: 'youtube'},
+            {text: 'Kids of Colombia', url: 'https://www.youtube.com/embed/_7BQwoYIRws', thumbnail: "/images/thumbnails/colombia.jpg", type: 'youtube'},
+            {text: 'Colosseum Concert 1', url: 'https://youtube.com/embed/XomIkS_saXQ?feature=share', thumbnail: "/images/thumbnails/colosseum_1.jpg", type: 'youtube'},
+            {text: 'Colosseum Concert 2', url: 'https://youtube.com/embed/qUyKF1YstFI?feature=share', thumbnail: "/images/thumbnails/colosseum_2.jpg", type: 'youtube'},
+            {text: 'Jazz 1', url: 'https://youtube.com/embed/eQ4AcQJPnE4?feature=share', thumbnail: "/images/thumbnails/jazz_1.jpg", type: 'youtube'},
           ],
-          backgroundImage: images.current["/images/2falling.jpg"]
+          backgroundImage: images.current["/images/canvases/2falling.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -633,7 +629,7 @@ function Portfolio() {
           textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000",
           text: "Comics | Hidden QR Codes | Children's Show Concept Art | Wallpapers | Product Images",
           links: [],
-          backgroundImage: images.current["/images/pics.jpg"]
+          backgroundImage: images.current["/images/canvases/pics.jpg"]
         };
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
@@ -652,7 +648,7 @@ function Portfolio() {
             name: "Comics",
             text: "",
             links: comic_links,
-            backgroundImage: images.current["/images/pics.jpg"]
+            backgroundImage: images.current["/images/canvases/pics.jpg"]
           };
         break;
 
@@ -670,7 +666,7 @@ function Portfolio() {
             name: "QR_Codes",
             text: "",
             links: qr_links,
-            backgroundImage: images.current["/images/pics.jpg"]
+            backgroundImage: images.current["/images/canvases/pics.jpg"]
           };
         break;
 
@@ -688,7 +684,7 @@ function Portfolio() {
             name: "Concept_Art",
             text: "",
             links: concept_links,
-            backgroundImage: images.current["/images/pics.jpg"]
+            backgroundImage: images.current["/images/canvases/pics.jpg"]
           };
         break;
 
@@ -707,7 +703,7 @@ function Portfolio() {
             name: "Wallpapers",
             text: "",
             links,
-            backgroundImage: images.current["/images/pics.jpg"]
+            backgroundImage: images.current["/images/canvases/pics.jpg"]
           };
           break;
 
@@ -725,7 +721,7 @@ function Portfolio() {
             name: "Products",
             text: "",
             links: product_links,
-            backgroundImage: images.current["/images/pics.jpg"]
+            backgroundImage: images.current["/images/canvases/pics.jpg"]
           };
         break;
 
@@ -823,8 +819,8 @@ function Portfolio() {
           </div>
         }
         {state.name === 'Writing' && 
-          <div className="sectionContainer" style={{backgroundImage: `url(${images.current["/images/writing_background.jpg"].src})`}}>
-            <div className="unfurl" style={{backgroundImage: `url(${images.current["/images/monkey.jpg"].src})`}}></div>
+          <div className="sectionContainer" style={{backgroundImage: `url(${images.current["/images/writing/writing_background.jpg"].src})`}}>
+            <div className="unfurl" style={{backgroundImage: `url(${images.current["/images/canvases/monkey.jpg"].src})`}}></div>
             <div className="mask">
               <div className="maskGrid"></div>
             </div>
@@ -896,10 +892,14 @@ function Portfolio() {
               {state.links.filter(link => link.type === 'youtube').slice(0, 5).map((link, i) => (
                 <div 
                   key={i} 
-                  className="youtubeThumbnail" 
-                  style={{backgroundImage: `url(${link.thumbnail})`}}
+                  className="youtubeThumbnail"
+                  style={{backgroundImage: `url(${images.current[link.thumbnail].src})`}} 
                   onClick={() => handleVideoClick(link)}
                 >
+                  <div 
+                    className="youtubeThumbnailBefore" 
+                    style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}} 
+                  ></div>
                   <div className="youtubeThumbnailText">{link.text}</div>
                 </div>
               ))}
@@ -909,23 +909,27 @@ function Portfolio() {
                 <div key={i} className="tiktokWrapper">
                   <TikTokEmbed key={link.videoId} userId={link.userId} videoId={link.videoId} text={link.text} />
                   <div className="tiktokOverlayContainer" onClick={() => handleTikTokClick(link)}>
-                    <div className="tiktokOverlay" style={{backgroundImage: `url(${images.current["/images/1falling.jpg"].src})`}}></div>
+                    <div className="tiktokOverlay" style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}}></div>
                     <div className="tiktokText">{link.text}</div>
                   </div>
                 </div>
               ))}
             </div>
             <div className="youtubeThumbnailContainer">
-              {state.links.filter(link => link.type === 'youtube').slice(5, 10).map((link, i) => (
-                <div 
-                  key={i} 
-                  className="youtubeThumbnail" 
-                  style={{backgroundImage: `url(${link.thumbnail})`}}
-                  onClick={() => handleVideoClick(link)}
-                >
-                  <div className="youtubeThumbnailText">{link.text}</div>
-                </div>
-              ))}
+                {state.links.filter(link => link.type === 'youtube').slice(5, 10).map((link, i) => (
+                    <div 
+                        key={i} 
+                        className="youtubeThumbnail"
+                        style={{backgroundImage: `url(${images.current[link.thumbnail].src})`}}
+                        onClick={() => handleVideoClick(link)}
+                    >
+                        <div 
+                            className="youtubeThumbnailBefore" 
+                            style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}} 
+                        ></div>
+                        <div className="youtubeThumbnailText">{link.text}</div>
+                    </div>
+                ))}
             </div>
           </div>
         }
