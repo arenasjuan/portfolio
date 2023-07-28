@@ -16,7 +16,6 @@ export function preloadImages(srcs) {
 
 
 export async function startTransition(targetEl, fromImage, toImage, dissolveMap, mapTarget) {
-  // const turbulence = kampos.effects.turbulence({ noise: kampos.noise.perlinNoise });
 
   let WIDTH, HEIGHT;
 

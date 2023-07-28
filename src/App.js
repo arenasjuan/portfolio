@@ -194,7 +194,7 @@ function Portfolio() {
     hippo.setSource({ media: currentImageRef.current, width: WIDTH, height: HEIGHT });
     hippo.draw();
     hippo.stop();
-  }, []);
+  }, );
 
 
   useEffect(() => {
