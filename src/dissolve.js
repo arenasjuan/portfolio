@@ -58,7 +58,7 @@ export async function startTransition(targetEl, fromImage, toImage) {
   dissolve.to = toImage;
 
   let start;
-  const duration = 750;
+  const duration = 700;
 
   const transition = (timestamp) => {
     if (!start) start = timestamp;

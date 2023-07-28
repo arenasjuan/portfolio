@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { startTransition, preloadImages } from './dissolve.js';
 import './App.css';
+import * as kampos from 'kampos';
 
 
 function ImageContainer({ link, handleImageClick }) {
@@ -53,8 +54,9 @@ function Portfolio() {
   const initialState = {
     text: "AI Art | Writing | Coding",
     links: [],
-    backgroundImage: "/images/canvases/orange.jpg",
+    backgroundImage: "",
   };
+
   const [state, setState] = useState(initialState);
   const key = useState(Math.random());
   const stateHistory = useRef([initialState]);
@@ -68,13 +70,12 @@ function Portfolio() {
   const [currentVideoUrl, setCurrentVideoUrl] = useState("");
   const [loadProgress, setLoadProgress] = useState(0);
   const [playingVideoId, setPlayingVideoId] = useState(null);
-
+  const currentImageRef = useRef();
   
   const preloadImages = async (urls) => {
     let loadedImages = {};
     let loadedCount = 0;
 
-    
     for (const [index, url] of urls.entries()) {
       await new Promise((resolve, reject) => {
         const img = new Image();
@@ -132,9 +133,12 @@ function Portfolio() {
       "/images/thumbnails/jazz_1.jpg",
     ]).then(preloadedImages => {
       images.current = preloadedImages;
-      setState(prevState => ({...prevState, backgroundImage: preloadedImages["/images/canvases/orange.jpg"]}));
+      const orangeImage = preloadedImages["/images/canvases/orange.jpg"];
+      setState(prevState => ({...prevState, backgroundImage: orangeImage}));
+      currentImageRef.current = orangeImage;
     });
   }, []); 
+
 
   const updateBackgroundSize = useCallback(() => {
       const canvas = appRef.current.querySelector('.dissolveCanvas');
@@ -143,8 +147,22 @@ function Portfolio() {
         return;
       }
 
+      let WIDTH, HEIGHT;
+
+      if (window.innerWidth > window.innerHeight) {
+        WIDTH = window.innerWidth;
+        HEIGHT = window.innerWidth / 2;
+      } else {
+        HEIGHT = window.innerHeight;
+        WIDTH = window.innerHeight * 2;
+      }
+
+      const hippo = new kampos.Kampos({ target: canvas, effects: [] });
+      hippo.setSource({ media: currentImageRef.current, width: WIDTH, height: HEIGHT });
+      hippo.draw();
+
       const viewportAspectRatio = window.innerWidth / window.innerHeight;
-      const canvasAspectRatio = canvas.width / canvas.height;
+      const canvasAspectRatio = WIDTH / HEIGHT;
 
       if (viewportAspectRatio > canvasAspectRatio) {
         canvas.style.width = '100vw';
@@ -160,6 +178,7 @@ function Portfolio() {
       }
     }, []);
 
+
   useEffect(() => {
     const script = document.createElement("script");
 
@@ -173,20 +192,6 @@ function Portfolio() {
     };
   }, []);
 
-
-  function TikTokEmbed({ userId, videoId, isActive }) {
-    return (
-      <iframe title="TiktokFrame"
-        src={`https://www.tiktok.com/embed/v2/${videoId}?lang=en-US`}
-        height="100%"  
-        frameBorder="0"
-        allow="autoplay; fullscreen" 
-        allowFullScreen
-      />
-    );
-  }
-
-
   useLayoutEffect(() => {
       updateBackgroundSize();
 
@@ -195,9 +200,19 @@ function Portfolio() {
       return () => {
         window.removeEventListener('resize', updateBackgroundSize);
       };
-    }, [updateBackgroundSize]);
+    }, []);
 
-
+  function TikTokEmbed({ userId, videoId, isActive }) {
+    return (
+      <iframe title="TiktokFrame"
+        className="tiktok-frame"
+        src={`https://www.tiktok.com/embed/v2/${videoId}?lang=en-US`}
+        frameBorder="0"
+        allow="autoplay; fullscreen" 
+        allowFullScreen
+      />
+    );
+  }
 
   const handleImageClick = (url) => {
     setCurrentImage(url);
@@ -239,6 +254,7 @@ function Portfolio() {
           links: [],
           backgroundImage: images.current["/images/canvases/bot.jpg"]
         };
+        currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
 
@@ -281,6 +297,7 @@ function Portfolio() {
           ],
           backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
+        currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
 
@@ -563,6 +580,7 @@ function Portfolio() {
           footerTextTop: "The Matrix",
           footerTextBottom: "(Jackson Pollock, 2002)",
         };
+        currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
 
@@ -576,6 +594,7 @@ function Portfolio() {
           textColor: 'white',
           backgroundImage: images.current["/images/canvases/camera.jpg"]
         };
+        currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
 
@@ -590,6 +609,7 @@ function Portfolio() {
           ],
           backgroundImage: images.current["/images/canvases/biker.jpg"]
         };
+        currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
 
@@ -616,6 +636,7 @@ function Portfolio() {
           ],
           backgroundImage: images.current["/images/canvases/2falling.jpg"]
         };
+        currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
 
@@ -631,6 +652,7 @@ function Portfolio() {
           links: [],
           backgroundImage: images.current["/images/canvases/pics.jpg"]
         };
+        currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage);
         break;
 
@@ -739,10 +761,18 @@ function Portfolio() {
     const previousState = stateHistory.current.pop();
     if (previousState) {
       const canvas = appRef.current.getElementsByTagName('canvas')[0];
-      startTransition(canvas, state.backgroundImage, previousState.backgroundImage);
+      console.log("current state: ", state); // current state before setState
+      console.log("previousState: ", previousState); // state to which we are going back
+      console.log("canvas: ", canvas); // the canvas element
+
+      const fromImage = state.backgroundImage; // Save this before calling setState
       setState(previousState);
+      currentImageRef.current = previousState.backgroundImage;
+      startTransition(canvas, fromImage, previousState.backgroundImage);
     }
-  }
+  };
+
+
 
 
   function handleTikTokClick(link) {
