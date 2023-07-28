@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
+import React, { useState, useRef, useMemo, useEffect, useLayoutEffect, useCallback } from 'react';
 import { startTransition, preloadImages } from './dissolve.js';
 import './App.css';
 import * as kampos from 'kampos';
@@ -71,6 +71,8 @@ function Portfolio() {
   const [loadProgress, setLoadProgress] = useState(0);
   const [playingVideoId, setPlayingVideoId] = useState(null);
   const currentImageRef = useRef();
+  const mapTargetRef = useRef(null);
+  const dissolveMapRef = useRef(null);
   
   const preloadImages = async (urls) => {
     let loadedImages = {};
@@ -141,42 +143,58 @@ function Portfolio() {
 
 
   const updateBackgroundSize = useCallback(() => {
-      const canvas = appRef.current.querySelector('.dissolveCanvas');
+    const canvas = appRef.current.querySelector('.dissolveCanvas');
 
-      if (!canvas) {
-        return;
-      }
+    if (!canvas) {
+      return;
+    }
 
-      let WIDTH, HEIGHT;
+    let WIDTH, HEIGHT;
 
-      if (window.innerWidth > window.innerHeight) {
-        WIDTH = window.innerWidth;
-        HEIGHT = window.innerWidth / 2;
-      } else {
-        HEIGHT = window.innerHeight;
-        WIDTH = window.innerHeight * 2;
-      }
+    if (window.innerWidth > window.innerHeight) {
+      WIDTH = window.innerWidth;
+      HEIGHT = window.innerWidth / 2;
+    } else {
+      HEIGHT = window.innerHeight;
+      WIDTH = window.innerHeight * 2;
+    }
+    const viewportAspectRatio = window.innerWidth / window.innerHeight;
+    const canvasAspectRatio = WIDTH / HEIGHT;
 
-      const hippo = new kampos.Kampos({ target: canvas, effects: [] });
-      hippo.setSource({ media: currentImageRef.current, width: WIDTH, height: HEIGHT });
-      hippo.draw();
+    if (viewportAspectRatio > canvasAspectRatio) {
+      canvas.style.width = '100vw';
+      canvas.style.height = 'auto';
+    } else {
+      canvas.style.height = '100vh';
+      canvas.style.width = 'auto';
+    }
 
-      const viewportAspectRatio = window.innerWidth / window.innerHeight;
-      const canvasAspectRatio = WIDTH / HEIGHT;
+    if ((canvas.style.width === '100vw' && canvas.offsetHeight < window.innerHeight) ||
+        (canvas.style.height === '100vh' && canvas.offsetWidth < window.innerWidth)) {
+      [canvas.style.width, canvas.style.height] = [canvas.style.height, canvas.style.width];
+    }
 
-      if (viewportAspectRatio > canvasAspectRatio) {
-        canvas.style.width = '100vw';
-        canvas.style.height = 'auto';
-      } else {
-        canvas.style.height = '100vh';
-        canvas.style.width = 'auto';
-      }
+    const turbulence = kampos.effects.turbulence({ noise: kampos.noise.perlinNoise });
+    const CELL_FACTOR = 14;
+    const AMPLITUDE = CELL_FACTOR / WIDTH;
+    turbulence.frequency = { x: AMPLITUDE, y: AMPLITUDE };
+    turbulence.octaves = 2;
+    turbulence.isFractal = true;
 
-      if ((canvas.style.width === '100vw' && canvas.offsetHeight < window.innerHeight) ||
-          (canvas.style.height === '100vh' && canvas.offsetWidth < window.innerWidth)) {
-        [canvas.style.width, canvas.style.height] = [canvas.style.height, canvas.style.width];
-      }
-    }, []);
+    if (mapTargetRef.current === null) {
+      mapTargetRef.current = document.createElement('canvas');
+    }
+
+    mapTargetRef.current.width = WIDTH;
+    mapTargetRef.current.height = HEIGHT;
+
+    dissolveMapRef.current = new kampos.Kampos({ target: mapTargetRef.current, effects: [turbulence], noSource: true });
+
+    const hippo = new kampos.Kampos({ target: canvas, effects: [] });
+    hippo.setSource({ media: currentImageRef.current, width: WIDTH, height: HEIGHT });
+    hippo.draw();
+    hippo.stop();
+  }, []);
 
 
   useEffect(() => {
@@ -255,7 +273,7 @@ function Portfolio() {
           backgroundImage: images.current["/images/canvases/bot.jpg"]
         };
         currentImageRef.current = newState.backgroundImage;
-        startTransition(canvas, state.backgroundImage, newState.backgroundImage);
+        startTransition(canvas, state.backgroundImage, newState.backgroundImage, dissolveMapRef.current, mapTargetRef.current);
         break;
 
       case "Writing":
@@ -298,7 +316,7 @@ function Portfolio() {
           backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         currentImageRef.current = newState.backgroundImage;
-        startTransition(canvas, state.backgroundImage, newState.backgroundImage);
+        startTransition(canvas, state.backgroundImage, newState.backgroundImage, dissolveMapRef.current, mapTargetRef.current);
         break;
 
       case "Chimney Sweep":
@@ -581,7 +599,7 @@ function Portfolio() {
           footerTextBottom: "(Jackson Pollock, 2002)",
         };
         currentImageRef.current = newState.backgroundImage;
-        startTransition(canvas, state.backgroundImage, newState.backgroundImage);
+        startTransition(canvas, state.backgroundImage, newState.backgroundImage, dissolveMapRef.current, mapTargetRef.current);
         break;
 
       case "Videos":
@@ -595,7 +613,7 @@ function Portfolio() {
           backgroundImage: images.current["/images/canvases/camera.jpg"]
         };
         currentImageRef.current = newState.backgroundImage;
-        startTransition(canvas, state.backgroundImage, newState.backgroundImage);
+        startTransition(canvas, state.backgroundImage, newState.backgroundImage, dissolveMapRef.current, mapTargetRef.current);
         break;
 
       case "Long Videos":
@@ -610,7 +628,7 @@ function Portfolio() {
           backgroundImage: images.current["/images/canvases/biker.jpg"]
         };
         currentImageRef.current = newState.backgroundImage;
-        startTransition(canvas, state.backgroundImage, newState.backgroundImage);
+        startTransition(canvas, state.backgroundImage, newState.backgroundImage, dissolveMapRef.current, mapTargetRef.current);
         break;
 
       case "Tiktoks":
@@ -637,7 +655,7 @@ function Portfolio() {
           backgroundImage: images.current["/images/canvases/2falling.jpg"]
         };
         currentImageRef.current = newState.backgroundImage;
-        startTransition(canvas, state.backgroundImage, newState.backgroundImage);
+        startTransition(canvas, state.backgroundImage, newState.backgroundImage, dissolveMapRef.current, mapTargetRef.current);
         break;
 
 
@@ -653,7 +671,7 @@ function Portfolio() {
           backgroundImage: images.current["/images/canvases/pics.jpg"]
         };
         currentImageRef.current = newState.backgroundImage;
-        startTransition(canvas, state.backgroundImage, newState.backgroundImage);
+        startTransition(canvas, state.backgroundImage, newState.backgroundImage, dissolveMapRef.current, mapTargetRef.current);
         break;
 
       case "Comics":
@@ -768,7 +786,7 @@ function Portfolio() {
       const fromImage = state.backgroundImage; // Save this before calling setState
       setState(previousState);
       currentImageRef.current = previousState.backgroundImage;
-      startTransition(canvas, fromImage, previousState.backgroundImage);
+      startTransition(canvas, fromImage, previousState.backgroundImage, dissolveMapRef.current, mapTargetRef.current);
     }
   };
 
@@ -791,7 +809,6 @@ function Portfolio() {
 
 
   function VideoModal({ isOpen, url, onClose }) {
-    console.log('VideoModal rendered', { isOpen, url });
     return isOpen ? (
       <div className="modal">
         <div className="modal-content">

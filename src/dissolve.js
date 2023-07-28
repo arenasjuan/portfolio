@@ -15,8 +15,8 @@ export function preloadImages(srcs) {
 
 
 
-export async function startTransition(targetEl, fromImage, toImage) {
-  const turbulence = kampos.effects.turbulence({ noise: kampos.noise.perlinNoise });
+export async function startTransition(targetEl, fromImage, toImage, dissolveMap, mapTarget) {
+  // const turbulence = kampos.effects.turbulence({ noise: kampos.noise.perlinNoise });
 
   let WIDTH, HEIGHT;
 
@@ -32,24 +32,13 @@ export async function startTransition(targetEl, fromImage, toImage) {
     WIDTH = window.innerHeight * 2;
   }
 
-  const CELL_FACTOR = 10;
-  const AMPLITUDE = CELL_FACTOR / WIDTH;
-
-  turbulence.frequency = { x: AMPLITUDE, y: AMPLITUDE };
-  turbulence.octaves = 8;
-  turbulence.isFractal = true;
-
-  const mapTarget = document.createElement('canvas');
-  mapTarget.width = WIDTH;
-  mapTarget.height = HEIGHT;
-
-  const dissolveMap = new kampos.Kampos({ target: mapTarget, effects: [turbulence], noSource: true });
   dissolveMap.draw();
+  dissolveMap.stop()
 
   const dissolve = kampos.transitions.dissolve();
 
   dissolve.map = mapTarget;
-  dissolve.high = 0.05;
+  dissolve.high = 0.03;
 
   const hippo = new kampos.Kampos({ target: targetEl, effects: [dissolve] });
 
@@ -58,7 +47,7 @@ export async function startTransition(targetEl, fromImage, toImage) {
   dissolve.to = toImage;
 
   let start;
-  const duration = 700;
+  const duration = 900;
 
   const transition = (timestamp) => {
     if (!start) start = timestamp;
