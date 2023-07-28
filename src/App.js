@@ -200,7 +200,7 @@ function Portfolio() {
       return () => {
         window.removeEventListener('resize', updateBackgroundSize);
       };
-    }, []);
+    }, );
 
   function TikTokEmbed({ userId, videoId, isActive }) {
     return (
