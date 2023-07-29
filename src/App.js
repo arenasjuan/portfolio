@@ -198,14 +198,6 @@ function Portfolio() {
     };
   }, []);
 
-  useEffect(() => {
-      window.addEventListener('resize', updateBackgroundSize);
-
-      return () => {
-        window.removeEventListener('resize', updateBackgroundSize);
-      };
-  }, []); 
-
 
   useLayoutEffect(() => {
       updateBackgroundSize();
