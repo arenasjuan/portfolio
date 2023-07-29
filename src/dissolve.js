@@ -15,29 +15,27 @@ export function preloadImages(srcs) {
 
 
 
-export async function startTransition(targetEl, fromImage, toImage, dissolveMap, mapTarget) {
+export async function startTransition(targetEl, fromImage, toImage, WIDTH, HEIGHT) {
+  const turbulence = kampos.effects.turbulence({ noise: kampos.noise.perlinNoise });
 
-  let WIDTH, HEIGHT;
+  const CELL_FACTOR = 10;
+  const AMPLITUDE = CELL_FACTOR / WIDTH;
 
-  if (window.innerWidth > window.innerHeight) {
-    // Viewport is wider, so set the width of the image to the width of the viewport
-    // and calculate the height to maintain the image's aspect ratio
-    WIDTH = window.innerWidth;
-    HEIGHT = window.innerWidth / 2;
-  } else {
-    // Viewport is taller, so set the height of the image to the height of the viewport
-    // and calculate the width to maintain the image's aspect ratio
-    HEIGHT = window.innerHeight;
-    WIDTH = window.innerHeight * 2;
-  }
+  turbulence.frequency = { x: AMPLITUDE, y: AMPLITUDE };
+  turbulence.octaves = 8;
+  turbulence.isFractal = true;
 
+  var mapTarget = document.createElement('canvas');
+  mapTarget.width = WIDTH;
+  mapTarget.height = HEIGHT;
+
+  const dissolveMap = new kampos.Kampos({ target: mapTarget, effects: [turbulence], noSource: true });
   dissolveMap.draw();
-  dissolveMap.stop()
 
   const dissolve = kampos.transitions.dissolve();
 
   dissolve.map = mapTarget;
-  dissolve.high = 0.03;
+  dissolve.high = 0.05;
 
   const hippo = new kampos.Kampos({ target: targetEl, effects: [dissolve] });
 
@@ -46,7 +44,7 @@ export async function startTransition(targetEl, fromImage, toImage, dissolveMap,
   dissolve.to = toImage;
 
   let start;
-  const duration = 900;
+  const duration = 850;
 
   const transition = (timestamp) => {
     if (!start) start = timestamp;
@@ -63,4 +61,7 @@ export async function startTransition(targetEl, fromImage, toImage, dissolveMap,
   }
 
   requestAnimationFrame(transition);
+  const context = mapTarget.getContext('webgl');
+  context.getExtension("WEBGL_lose_context").loseContext();
+  mapTarget = null;
 }
