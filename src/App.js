@@ -49,6 +49,32 @@ function ImageModal({ isOpen, urls, currentUrlIndex, onClose, onNext, onPrevious
   ) : null;
 }
 
+function useWindowSize() {
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const handleResize = useCallback(() => {
+    setSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [handleResize]);
+
+  return size;
+}
+
+
 
 function Portfolio() {
   const initialState = {
@@ -73,6 +99,7 @@ function Portfolio() {
   const currentImageRef = useRef();
   const widthRef = useRef(null);
   const heightRef = useRef(null);
+  const size = useWindowSize();
   
   const preloadImages = async (urls) => {
     let loadedImages = {};
@@ -165,17 +192,23 @@ function Portfolio() {
     const viewportAspectRatio = WIDTH / HEIGHT;
     const canvasAspectRatio = widthRef.current / heightRef.current;
 
+    // Calculate the device pixel ratio
+    let ratio = window.devicePixelRatio || 1;
+
     if (viewportAspectRatio > canvasAspectRatio) {
       canvas.style.width = '100vw';
       canvas.style.height = 'auto';
+
+      // Set logical size with respect to ratio and aspect ratio
+      canvas.width = WIDTH * ratio;
+      canvas.height = (WIDTH / 2) * ratio;
     } else {
       canvas.style.height = '100vh';
       canvas.style.width = 'auto';
-    }
 
-    if ((canvas.style.width === '100vw' && canvas.offsetHeight < window.innerHeight) ||
-        (canvas.style.height === '100vh' && canvas.offsetWidth < window.innerWidth)) {
-      [canvas.style.width, canvas.style.height] = [canvas.style.height, canvas.style.width];
+      // Set logical size with respect to ratio and aspect ratio
+      canvas.height = HEIGHT * ratio;
+      canvas.width = (HEIGHT * 2) * ratio;
     }
 
     const hippo = new kampos.Kampos({ target: canvas, effects: [] });
@@ -183,6 +216,12 @@ function Portfolio() {
     hippo.draw();
     hippo.stop();
   };
+
+
+  useLayoutEffect(() => {
+    updateBackgroundSize();
+  }, [size]);
+
 
 
   useEffect(() => {
@@ -198,16 +237,6 @@ function Portfolio() {
     };
   }, []);
 
-
-  useLayoutEffect(() => {
-      updateBackgroundSize();
-
-      window.addEventListener('resize', updateBackgroundSize);
-
-      return () => {
-        window.removeEventListener('resize', updateBackgroundSize);
-      };
-    }, );
 
   function TikTokEmbed({ userId, videoId, isActive }) {
     return (
