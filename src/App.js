@@ -875,7 +875,15 @@ function Portfolio() {
             {state.links.filter(link => link.type === 'youtube').map((link, i) => (
               <div key={i}>
                 <p style={{color: link.color, fontSize: link.size, textShadow: link.textShadow}}>{link.text}</p>
-                <iframe src={link.url} title={link.text} frameBorder="0" allowFullScreen />
+                <div onClick={() => handleVideoClick(link)} style={{cursor: 'pointer'}}>
+                  <iframe 
+                    src={link.url} 
+                    title={link.text} 
+                    frameBorder="0" 
+                    allowFullScreen 
+                    style={{pointerEvents: 'none'}} 
+                  />
+                </div>
               </div>
             ))}
           </div>
