@@ -59,16 +59,24 @@ function ImageModal({ isOpen, urls, currentUrlIndex, onClose, onNext, onPrevious
         currentUrlIndex > 0 ? onPrevious() : onClose();
       }
     };
+
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
     }
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onNext, onPrevious, onClose, urls.length, currentUrlIndex]);
 
+  const handleBackdropClick = (event) => {
+    if (event.target.className === 'modal-navigation') {
+      onClose();
+    }
+  };
+
   return isOpen ? (
-    <div className="modal">
+    <div className="modal" onClick={handleBackdropClick}>
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
         <div className="modal-navigation">
@@ -329,6 +337,10 @@ export function Portfolio() {
   const handlePreviousImage = () => {
     setCurrentImageIndex(currentImageIndex - 1);
   }
+
+  const handleCloseImageModal = () => {
+    setModalIsOpen(false);
+  };
 
   const handleClick = (section) => {
     const canvas = appRef.current.getElementsByTagName('canvas')[0];
@@ -1059,7 +1071,7 @@ export function Portfolio() {
       isOpen={modalIsOpen} 
       urls={imageUrls} 
       currentUrlIndex={currentImageIndex} 
-      onClose={handleCloseModal} 
+      onClose={handleCloseImageModal} 
       onNext={handleNextImage} 
       onPrevious={handlePreviousImage}
     />
@@ -1088,10 +1100,16 @@ function VideoModal() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [videoModalIsOpen, handleCloseModal]); // change from [isOpen, onClose]
+  }, [videoModalIsOpen, handleCloseModal]);
+
+  const handleBackdropClick = (event) => {
+    if (event.target.className === 'modal-content') {
+      handleCloseModal();
+    }
+  };
 
   return videoModalIsOpen ? (
-    <div className="modal">
+    <div className="modal" onClick={handleBackdropClick}>
       <div className="modal-content">
         <span className="close" onClick={handleCloseModal}>&times;</span>
         <div className="modal-video">
@@ -1101,6 +1119,7 @@ function VideoModal() {
     </div>
   ) : null;
 }
+
 
 
 export default function App() {
