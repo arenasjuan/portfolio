@@ -1103,7 +1103,7 @@ function VideoModal() {
 }
 
 
-export default function() {
+export default function App() {
   return (
     <VideoProvider>
       <Portfolio />
