@@ -175,6 +175,7 @@ export function Portfolio() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loadProgress, setLoadProgress] = useState(0);
   const currentImageRef = useRef();
+  const [isWritingSampleOpen, setIsWritingSampleOpen] = useState(false);
   const widthRef = useRef(null);
   const heightRef = useRef(null);
   const size = useWindowSize();
@@ -856,9 +857,16 @@ export function Portfolio() {
     }
 
     if (newState) {
+      if (newState.name === 'Writing') {
+        setIsWritingSampleOpen(false);
+      } else if (newState.parent === 'Writing') {
+        setIsWritingSampleOpen(true);
+      }
+      
       stateHistory.current.push(state);
       setState(newState);
     }
+
   }
 
   const handleBack = () => {
@@ -932,7 +940,8 @@ export function Portfolio() {
         </div>
       }
       {state.name === 'Writing' && 
-        <div className="sectionContainer" style={{backgroundImage: `url(${images.current["/images/writing/writing_background.jpg"].src})`}}>
+        <div className={`sectionContainer ${isWritingSampleOpen ? 'no-animation sample-open' : ''}`}
+        style={{backgroundImage: `url(${images.current["/images/writing/writing_background.jpg"].src})`}}>
           <div className="unfurl" style={{backgroundImage: `url(${images.current["/images/canvases/monkey.jpg"].src})`}}></div>
           <div className="mask">
             <div className="maskGrid"></div>
