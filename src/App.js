@@ -1,8 +1,40 @@
-import React, { useState, useRef, useMemo, useEffect, useLayoutEffect, useCallback } from 'react';
+import 'lite-youtube-embed/src/lite-yt-embed';
+import React, { useState, useRef, useMemo, useEffect, useLayoutEffect, useCallback, useContext, createContext } from 'react';
 import { startTransition, preloadImages } from './dissolve.js';
 import './App.css';
 import * as kampos from 'kampos';
 
+export const VideoContext = createContext();
+
+export function VideoProvider({ children }) {
+  const [videoModalIsOpen, setVideoModalIsOpen] = useState(false);
+  const [currentVideoId, setCurrentVideoId] = useState(null);
+  const [currentVideoType, setCurrentVideoType] = useState(null);
+  const [currentVideoThumbnail, setCurrentVideoThumbnail] = useState(null);
+
+  const handleTikTokClick = (link) => {
+    setCurrentVideoId(link.videoId);
+    setCurrentVideoType(link.type);
+    setVideoModalIsOpen(true);
+  }
+
+  const handleVideoClick = (videoId, thumbnail) => {
+    setCurrentVideoId(videoId);
+    setCurrentVideoThumbnail(thumbnail);
+    setCurrentVideoType('youtube');
+    setVideoModalIsOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setVideoModalIsOpen(false);
+  };
+
+  return (
+    <VideoContext.Provider value={{ videoModalIsOpen, setVideoModalIsOpen, currentVideoId, setCurrentVideoId, currentVideoType, setCurrentVideoType, currentVideoThumbnail, setCurrentVideoThumbnail, handleTikTokClick, handleVideoClick, handleCloseModal }}>
+      {children}
+    </VideoContext.Provider>
+  );
+}
 
 function ImageContainer({ link, handleImageClick }) {
   return (
@@ -49,6 +81,42 @@ function ImageModal({ isOpen, urls, currentUrlIndex, onClose, onNext, onPrevious
   ) : null;
 }
 
+const TikTokEmbed = React.memo(function TikTokEmbed({ videoId }) {
+  return (
+    <iframe 
+      title="TiktokFrame"
+      className="tiktok-frame"
+      src={`https://www.tiktok.com/embed/v2/${videoId}?lang=en-US`}
+      frameBorder="0"
+      allow="autoplay; fullscreen" 
+      allowFullScreen
+    />
+  );
+});
+
+const VideoComponent = React.memo(({ videoType, videoId, videoThumbnail }) => {
+  const [currentVideoType, setCurrentVideoType] = useState(videoType);
+  const [currentVideoId, setCurrentVideoId] = useState(videoId);
+  const [currentVideoThumbnail, setCurrentVideoThumbnail] = useState(videoThumbnail);
+
+  useEffect(() => {
+    setCurrentVideoType(videoType);
+    setCurrentVideoId(videoId);
+    setCurrentVideoThumbnail(videoThumbnail);
+  }, [videoType, videoId, videoThumbnail]);
+
+  return (
+    currentVideoType === 'youtube' ? 
+      <lite-youtube 
+        videoid={currentVideoId} 
+        playlabel="Play video" 
+        style={{ backgroundImage: `url(${currentVideoThumbnail})` }}
+      />
+      :
+      <TikTokEmbed videoId={currentVideoId} />
+  );
+});
+
 function useWindowSize() {
   const [size, setSize] = useState({
     width: window.innerWidth,
@@ -56,6 +124,10 @@ function useWindowSize() {
   });
 
   const handleResize = useCallback(() => {
+    // Ignore resize events caused by fullscreen mode
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+      return;
+    }
     setSize({
       width: window.innerWidth,
       height: window.innerHeight,
@@ -76,13 +148,14 @@ function useWindowSize() {
 
 
 
-function Portfolio() {
+
+export function Portfolio() {
   const initialState = {
     text: "AI Art | Writing | Coding",
     links: [],
     backgroundImage: "",
   };
-
+  const { handleTikTokClick, handleVideoClick, videoModalIsOpen, currentVideoId, handleCloseModal } = useContext(VideoContext);
   const [state, setState] = useState(initialState);
   const key = useState(Math.random());
   const stateHistory = useRef([initialState]);
@@ -92,14 +165,12 @@ function Portfolio() {
   const [currentImage, setCurrentImage] = useState("");
   const [imageUrls, setImageUrls] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [videoModalIsOpen, setVideoModalIsOpen] = useState(false);
-  const [currentVideoUrl, setCurrentVideoUrl] = useState("");
   const [loadProgress, setLoadProgress] = useState(0);
-  const [playingVideoId, setPlayingVideoId] = useState(null);
   const currentImageRef = useRef();
   const widthRef = useRef(null);
   const heightRef = useRef(null);
   const size = useWindowSize();
+  const [hoveredThumbnail, setHoveredThumbnail] = useState(null);
   
   const preloadImages = async (urls) => {
     let loadedImages = {};
@@ -134,7 +205,6 @@ function Portfolio() {
       "/images/canvases/bot.jpg",
       "/images/canvases/biker.jpg",
       "/images/canvases/pics.jpg",
-      "/images/canvases/kids.jpg",
       "/images/canvases/camera.jpg",
       "/images/writing/writing_background.jpg",
       "/images/writing/shamu.jpg",
@@ -160,6 +230,10 @@ function Portfolio() {
       "/images/thumbnails/colosseum_1.jpg",
       "/images/thumbnails/colosseum_2.jpg",
       "/images/thumbnails/jazz_1.jpg",
+      '/images/thumbnails/bikematter.jpg',
+      '/images/thumbnails/griffith.jpg',
+      "/images/thumbnails/grey_button.png",
+      "/images/thumbnails/red_button.png"
     ]).then(preloadedImages => {
       images.current = preloadedImages;
       const orangeImage = preloadedImages["/images/canvases/orange.jpg"];
@@ -170,6 +244,10 @@ function Portfolio() {
 
 
   const updateBackgroundSize = () => {
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+      return;
+    }
+
     const canvas = appRef.current.querySelector('.dissolveCanvas');
 
     if (!canvas) {
@@ -223,7 +301,6 @@ function Portfolio() {
   }, [size]);
 
 
-
   useEffect(() => {
     const script = document.createElement("script");
 
@@ -238,34 +315,12 @@ function Portfolio() {
   }, []);
 
 
-  function TikTokEmbed({ userId, videoId, isActive }) {
-    return (
-      <iframe title="TiktokFrame"
-        className="tiktok-frame"
-        src={`https://www.tiktok.com/embed/v2/${videoId}?lang=en-US`}
-        frameBorder="0"
-        allow="autoplay; fullscreen" 
-        allowFullScreen
-      />
-    );
-  }
-
   const handleImageClick = (url) => {
     setCurrentImage(url);
     setImageUrls(state.links.filter(link => link.type === 'image').map(link => link.url));
     setCurrentImageIndex(state.links.findIndex(link => link.url === url));
     setModalIsOpen(true);
   };
-
-  const handleCloseModal = () => {
-    setModalIsOpen(false);
-  };
-
-  const handleThumbnailClick = (videoId) => {
-    setPlayingVideoId(videoId);
-    window.tiktokPixel && window.tiktokPixel();
-  };
-
 
   const handleNextImage = () => {
     setCurrentImageIndex(currentImageIndex + 1);
@@ -640,14 +695,15 @@ function Portfolio() {
           name: "LongVideos",
           text: "",
           links: [
-            {text: "'Bike Matter' (Mashup and Animation)", url: 'https://www.youtube.com/embed/6qZA2B3uBtQ', type: 'youtube', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
-            {text: "'Griffith' (Griffith Observatory Timelapse)", url: 'https://www.youtube.com/embed/SJFtzAoD_z4', type: 'youtube', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
+            {text: "'Bike Matter' (Mashup and Animation)", videoId: '6qZA2B3uBtQ', thumbnail: images.current["/images/thumbnails/bikematter.jpg"], type: 'youtube', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
+            {text: "'Griffith' (Griffith Observatory Timelapse)", videoId: 'SJFtzAoD_z4', thumbnail: images.current["/images/thumbnails/griffith.jpg"], type: 'youtube', color: 'white', size: '4vh', textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000"},
           ],
           backgroundImage: images.current["/images/canvases/biker.jpg"]
         };
         currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage, widthRef.current, heightRef.current);
         break;
+
 
       case "Tiktoks":
         newState = {
@@ -656,19 +712,19 @@ function Portfolio() {
           text: "",
           links: [
             // TikTok videos
-            {text: 'Studio Cat', videoId: '7247773989001563435', userId: 'juanmakestiktoks', type: 'tiktok'},
-            {text: 'Bike Matter', videoId: '7251275338284551467', userId: 'juanmakestiktoks', type: 'tiktok'},
+            {text: 'Studio Cat', videoId: '7247773989001563435', type: 'tiktok'},
+            {text: 'Bike Matter', videoId: '7251275338284551467', type: 'tiktok'},
             // YouTube videos
-            {text: '1920s Oil', url: 'https://youtube.com/embed/dDGBdUvkybA?feature=share', thumbnail: "/images/thumbnails/1920s.jpg", type: 'youtube'},
-            {text: 'Space Studio', url: 'https://youtube.com/embed/JPsjcZMWZ1Q?feature=share', thumbnail: "/images/thumbnails/studio.jpg", type: 'youtube'},
-            {text: 'Alley Scene', url: 'https://youtube.com/embed/ctxUODexaH0?feature=share', thumbnail: "/images/thumbnails/alley.jpg", type: 'youtube'},
-            {text: 'Gnome 1', url: 'https://youtube.com/embed/19gnjVwPhOk?feature=share', thumbnail: "/images/thumbnails/gnome.jpg", type: 'youtube'},
-            {text: 'Flamenco Oil', url: 'https://youtube.com/embed/W2PTDCu1Avw?feature=share', thumbnail: "/images/thumbnails/flamenco.jpg", type: 'youtube'},
-            {text: 'Graffiti Oil', url: 'https://youtube.com/embed/Pw2cGRHuQR4?feature=share', thumbnail: "/images/thumbnails/graffiti.jpg", type: 'youtube'},
-            {text: 'Kids of Colombia', url: 'https://www.youtube.com/embed/_7BQwoYIRws', thumbnail: "/images/thumbnails/colombia.jpg", type: 'youtube'},
-            {text: 'Colosseum Concert 1', url: 'https://youtube.com/embed/XomIkS_saXQ?feature=share', thumbnail: "/images/thumbnails/colosseum_1.jpg", type: 'youtube'},
-            {text: 'Colosseum Concert 2', url: 'https://youtube.com/embed/qUyKF1YstFI?feature=share', thumbnail: "/images/thumbnails/colosseum_2.jpg", type: 'youtube'},
-            {text: 'Jazz 1', url: 'https://youtube.com/embed/eQ4AcQJPnE4?feature=share', thumbnail: "/images/thumbnails/jazz_1.jpg", type: 'youtube'},
+            {text: '1920s Oil', videoId: 'dDGBdUvkybA', thumbnail: images.current["/images/thumbnails/1920s.jpg"], type: 'youtube'},
+            {text: 'Space Studio', videoId: 'JPsjcZMWZ1Q', thumbnail: images.current["/images/thumbnails/studio.jpg"], type: 'youtube'},
+            {text: 'Alley Scene', videoId: 'ctxUODexaH0', thumbnail: images.current["/images/thumbnails/alley.jpg"], type: 'youtube'},
+            {text: 'Gnome 1', videoId: '19gnjVwPhOk', thumbnail: images.current["/images/thumbnails/gnome.jpg"], type: 'youtube'},
+            {text: 'Flamenco Oil', videoId: 'W2PTDCu1Avw', thumbnail: images.current["/images/thumbnails/flamenco.jpg"], type: 'youtube'},
+            {text: 'Graffiti Oil', videoId: 'Pw2cGRHuQR4', thumbnail: images.current["/images/thumbnails/graffiti.jpg"], type: 'youtube'},
+            {text: 'Kids of Colombia', videoId: '_7BQwoYIRws', thumbnail: images.current["/images/thumbnails/colombia.jpg"], type: 'youtube'},
+            {text: 'Colosseum Concert 1', videoId: 'XomIkS_saXQ', thumbnail: images.current["/images/thumbnails/colosseum_1.jpg"], type: 'youtube'},
+            {text: 'Colosseum Concert 2', videoId: 'qUyKF1YstFI', thumbnail: images.current["/images/thumbnails/colosseum_2.jpg"], type: 'youtube'},
+            {text: 'Jazz 1', videoId: 'eQ4AcQJPnE4', thumbnail: images.current["/images/thumbnails/jazz_1.jpg"], type: 'youtube'},
           ],
           backgroundImage: images.current["/images/canvases/2falling.jpg"]
         };
@@ -805,38 +861,6 @@ function Portfolio() {
     }
   };
 
-
-
-
-  function handleTikTokClick(link) {
-    if (link.type === 'tiktok') {
-      const tiktokUrl = `https://www.tiktok.com/embed/v2/${link.videoId}?lang=en-US`;
-      setCurrentVideoUrl(tiktokUrl);
-    }
-    setVideoModalIsOpen(true);
-  }
-
-
-  function handleVideoClick(link) {
-    setCurrentVideoUrl(link.type === 'youtube' ? link.url : `https://www.tiktok.com/embed/v2/${link.videoId}?lang=en-US`);
-    setVideoModalIsOpen(true);
-  }
-
-
-  function VideoModal({ isOpen, url, onClose }) {
-    return isOpen ? (
-      <div className="modal">
-        <div className="modal-content">
-          <span className="close" onClick={onClose}>&times;</span>
-          <div className="modal-video">
-            <iframe src={url} title="Video Player" frameBorder="0" allowFullScreen />
-          </div>
-        </div>
-      </div>
-    ) : null;
-  }
-
-
   return (
     <div key={key} ref={appRef} className="app">
       {loadProgress < 100 ? (
@@ -870,178 +894,220 @@ function Portfolio() {
         </div>
       }
       <div className={`links ${state.name}`}>
-        {state.name === 'LongVideos' && 
-          <div className="videoContainer">
-            {state.links.filter(link => link.type === 'youtube').map((link, i) => (
-              <div key={i}>
-                <p style={{color: link.color, fontSize: link.size, textShadow: link.textShadow}}>{link.text}</p>
-                <div onClick={() => handleVideoClick(link)} style={{cursor: 'pointer'}}>
-                  <iframe 
-                    src={link.url} 
-                    title={link.text} 
-                    frameBorder="0" 
-                    allowFullScreen 
+      {state.name === 'LongVideos' && 
+        <div className="videoContainer">
+          {state.links.filter(link => link.type === 'youtube').map((link, i) => (
+            <div key={i} className="video-thumbnail-wrapper">
+              <p style={{color: link.color, fontSize: link.size, textShadow: link.textShadow}}>{link.text}</p>
+              <div className="thumbnail-play-wrapper">
+                <div 
+                  className="thumbnail-play"
+                  onMouseEnter={() => setHoveredThumbnail(i)}
+                  onMouseLeave={() => setHoveredThumbnail(null)}
+                  onClick={() => handleVideoClick(link.videoId, link.thumbnail.src)}
+                  style={{backgroundImage: `url(${link.thumbnail.src})`, cursor: 'pointer'}}
+                >
+                  <img 
+                    className={`play-button ${hoveredThumbnail === i ? 'red-button' : 'grey-button'}`} 
+                    src={hoveredThumbnail === i ? images.current['/images/thumbnails/red_button.png'].src : images.current['/images/thumbnails/grey_button.png'].src} 
+                    alt={link.text} 
                     style={{pointerEvents: 'none'}} 
                   />
                 </div>
               </div>
-            ))}
-          </div>
-        }
-        {state.name === 'Writing' && 
-          <div className="sectionContainer" style={{backgroundImage: `url(${images.current["/images/writing/writing_background.jpg"].src})`}}>
-            <div className="unfurl" style={{backgroundImage: `url(${images.current["/images/canvases/monkey.jpg"].src})`}}></div>
-            <div className="mask">
-              <div className="maskGrid"></div>
             </div>
-            <div className="contentWrapper">
-              {state.links.map((link, i) => 
-                link.type === 'section' && (
-                  <div key={i} className="section">
-                    <div className="sectionTitle">{link.title}</div>
-                    <hr className="customHr"/>
-                    {link.sectionLinks.map((sectionLink, j) => {
-                      if (sectionLink.partiallyHyperlinked) {
-                        const [otherText, hyperlinkText] = sectionLink.text.split('Symphonia Fantastica #');
-                        return (
-                          <div key={j} className="linkWrapper partiallyHyperlinked">
-                            <span className="otherText">{otherText}</span>
+          ))}
+        </div>
+      }
+      {state.name === 'Writing' && 
+        <div className="sectionContainer" style={{backgroundImage: `url(${images.current["/images/writing/writing_background.jpg"].src})`}}>
+          <div className="unfurl" style={{backgroundImage: `url(${images.current["/images/canvases/monkey.jpg"].src})`}}></div>
+          <div className="mask">
+            <div className="maskGrid"></div>
+          </div>
+          <div className="contentWrapper">
+            {state.links.map((link, i) => 
+              link.type === 'section' && (
+                <div key={i} className="section">
+                  <div className="sectionTitle">{link.title}</div>
+                  <hr className="customHr"/>
+                  {link.sectionLinks.map((sectionLink, j) => {
+                    if (sectionLink.partiallyHyperlinked) {
+                      const [otherText, hyperlinkText] = sectionLink.text.split('Symphonia Fantastica #');
+                      return (
+                        <div key={j} className="linkWrapper partiallyHyperlinked">
+                          <span className="otherText">{otherText}</span>
+                          <a className="sectionLink" href={sectionLink.url} target="_blank" rel="noopener noreferrer">
+                            {'Symphonia Fantastica #' + (hyperlinkText || '')}
+                          </a>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={j} className="linkWrapper">
+                          {sectionLink.url ?
                             <a className="sectionLink" href={sectionLink.url} target="_blank" rel="noopener noreferrer">
-                              {'Symphonia Fantastica #' + (hyperlinkText || '')}
+                              {sectionLink.text}
                             </a>
-                          </div>
-                        );
-                      } else {
-                        return (
-                          <div key={j} className="linkWrapper">
-                            {sectionLink.url ?
-                              <a className="sectionLink" href={sectionLink.url} target="_blank" rel="noopener noreferrer">
-                                {sectionLink.text}
-                              </a>
-                              :
-                              <span className="sectionLink" onClick={() => handleClick(sectionLink.text)}>
-                                {sectionLink.text}
-                              </span>
-                            }
-                          </div>
-                        );
-                      }
-                    })}
-                  </div>
-                )
+                            :
+                            <span className="sectionLink" onClick={() => handleClick(sectionLink.text)}>
+                              {sectionLink.text}
+                            </span>
+                          }
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      }
+      {state.cssTag && 
+        <div className={`writingSample ${state.cssTag}-sample`}>
+          {state.paragraphs && 
+            <div className={`sample-container ${state.cssTag}-container`}>
+              {state.title && 
+                <div className={`title ${state.cssTag}-title`}>
+                  {state.title}
+                </div>
+              }
+              {state.imageTop && 
+                <img src={state.imageTop.src} alt={`${state.name} Piece Illustration`} className={`image-top ${state.cssTag}-image-top`} />
+              }
+              {state.paragraphs.map((paragraph, i) => 
+                <div key={i} className={`paragraph ${state.cssTag}-paragraph`} dangerouslySetInnerHTML={{ __html: paragraph }}>
+                </div>
               )}
             </div>
-          </div>
-        }
-        {state.cssTag && 
-          <div className={`writingSample ${state.cssTag}-sample`}>
-            {state.paragraphs && 
-              <div className={`sample-container ${state.cssTag}-container`}>
-                {state.title && 
-                  <div className={`title ${state.cssTag}-title`}>
-                    {state.title}
-                  </div>
-                }
-                {state.imageTop && 
-                  <img src={state.imageTop.src} alt={`${state.name} Piece Illustration`} className={`image-top ${state.cssTag}-image-top`} />
-                }
-                {state.paragraphs.map((paragraph, i) => 
-                  <div key={i} className={`paragraph ${state.cssTag}-paragraph`} dangerouslySetInnerHTML={{ __html: paragraph }}>
-                  </div>
-                )}
-              </div>
-            }
-            {state.image && 
-              <img src={state.image.src} alt={`${state.name} Magazine Cover`} className={`image ${state.cssTag}-image`} />
-            }
-          </div>
-        }
-        {state.name === 'Tiktoks' &&
-          <div className="tiktokContainer">
-            <div className="youtubeThumbnailContainer">
-              {state.links.filter(link => link.type === 'youtube').slice(0, 5).map((link, i) => (
-                <div 
-                  key={i} 
-                  className="youtubeThumbnail"
-                  style={{backgroundImage: `url(${images.current[link.thumbnail].src})`}} 
-                  onClick={() => handleVideoClick(link)}
-                >
-                  <div 
-                    className="youtubeThumbnailBefore" 
-                    style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}} 
-                  ></div>
-                  <div className="youtubeThumbnailText">{link.text}</div>
-                </div>
-              ))}
-            </div>
-            <div className="tiktoks">
-              {state.links.filter(link => link.type === 'tiktok').map((link, i) => (
-                <div key={i} className="tiktokWrapper">
-                  <TikTokEmbed key={link.videoId} userId={link.userId} videoId={link.videoId} text={link.text} />
-                  <div className="tiktokOverlayContainer" onClick={() => handleTikTokClick(link)}>
-                    <div className="tiktokOverlay" style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}}></div>
-                    <div className="tiktokText">{link.text}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="youtubeThumbnailContainer">
-                {state.links.filter(link => link.type === 'youtube').slice(5, 10).map((link, i) => (
-                    <div 
-                        key={i} 
-                        className="youtubeThumbnail"
-                        style={{backgroundImage: `url(${images.current[link.thumbnail].src})`}}
-                        onClick={() => handleVideoClick(link)}
-                    >
-                        <div 
-                            className="youtubeThumbnailBefore" 
-                            style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}} 
-                        ></div>
-                        <div className="youtubeThumbnailText">{link.text}</div>
-                    </div>
-                ))}
-            </div>
-          </div>
-        }
-
-      {state.parent === 'Images' &&
-          <div className={`imageGallery ${state.name}`}>
-            {state.links.filter(link => link.type === 'image').map((link, i) => (
-              <ImageContainer key={i} link={link} handleImageClick={handleImageClick} />
-            ))}
-          </div>
+          }
+          {state.image && 
+            <img src={state.image.src} alt={`${state.name} Magazine Cover`} className={`image ${state.cssTag}-image`} />
+          }
+        </div>
       }
-        {state.name === 'Coding' &&
-          <div className={`linkContainer`}>
-            <div className="linksTitle">{state.linkTitle}</div>
-            <hr className="codeBar"/>
-            {state.links.map((link, i) => (
-              <div key={i}>
-                <a className="codeLinks" href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
-                <span className="codeDescriptions">{link.description}</span>
+      {state.name === 'Tiktoks' &&
+        <div className="tiktokContainer">
+          <div className="youtubeThumbnailContainer">
+            {state.links.filter(link => link.type === 'youtube').slice(0, 5).map((link, i) => (
+              <div 
+                key={i} 
+                className="youtubeThumbnail"
+                style={{backgroundImage: `url(${link.thumbnail.src})`}} 
+                onClick={() => handleVideoClick(link.videoId, link.thumbnail.src)}
+              >
+                <div 
+                  className="youtubeThumbnailBefore" 
+                  style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}} 
+                ></div>
+                <div className="youtubeThumbnailText">{link.text}</div>
               </div>
             ))}
           </div>
-        }
-      </div>
-      {state.text !== "AI Art | Writing | Coding" && <span className="back-button" onClick={handleBack}>←Back</span>}
-      <ImageModal 
-        isOpen={modalIsOpen} 
-        urls={imageUrls} 
-        currentUrlIndex={currentImageIndex} 
-        onClose={handleCloseModal} 
-        onNext={handleNextImage} 
-        onPrevious={handlePreviousImage}
-      />
-      <VideoModal
-        isOpen={videoModalIsOpen}
-        url={currentVideoUrl}
-        onClose={() => setVideoModalIsOpen(false)}
-      />
+          <div className="tiktoks">
+            {state.links.filter(link => link.type === 'tiktok').map((link, i) => (
+              <div key={i} className="tiktokWrapper">
+                <TikTokEmbed key={link.videoId} videoId={link.videoId} text={link.text} />
+                <div className="tiktokOverlayContainer" onClick={() => handleTikTokClick(link)}>
+                  <div className="tiktokOverlay" style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}}></div>
+                  <div className="tiktokText">{link.text}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="youtubeThumbnailContainer">
+              {state.links.filter(link => link.type === 'youtube').slice(5).map((link, i) => (
+                  <div 
+                      key={i} 
+                      className="youtubeThumbnail"
+                      style={{backgroundImage: `url(${link.thumbnail.src})`}}
+                      onClick={() => handleVideoClick(link.videoId, link.thumbnail.src)}
+                  >
+                      <div 
+                          className="youtubeThumbnailBefore" 
+                          style={{backgroundImage: `url(${images.current["/images/canvases/1falling.jpg"].src})`}} 
+                      ></div>
+                      <div className="youtubeThumbnailText">{link.text}</div>
+                  </div>
+              ))}
+          </div>
+        </div>
+      }
+      {state.parent === 'Images' &&
+        <div className={`imageGallery ${state.name}`}>
+          {state.links.filter(link => link.type === 'image').map((link, i) => (
+            <ImageContainer key={i} link={link} handleImageClick={handleImageClick} />
+          ))}
+        </div>
+      }
+      {state.name === 'Coding' &&
+        <div className={`linkContainer`}>
+          <div className="linksTitle">{state.linkTitle}</div>
+          <hr className="codeBar"/>
+          {state.links.map((link, i) => (
+            <div key={i}>
+              <a className="codeLinks" href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
+              <span className="codeDescriptions">{link.description}</span>
+            </div>
+          ))}
+        </div>
+      }
     </div>
-  );
-
+    {state.text !== "AI Art | Writing | Coding" && <span className="back-button" onClick={handleBack}>←Back</span>}
+    <ImageModal 
+      isOpen={modalIsOpen} 
+      urls={imageUrls} 
+      currentUrlIndex={currentImageIndex} 
+      onClose={handleCloseModal} 
+      onNext={handleNextImage} 
+      onPrevious={handlePreviousImage}
+    />
+    <VideoModal
+      isOpen={videoModalIsOpen}
+      videoId={currentVideoId}
+      onClose={handleCloseModal}
+    />
+  </div>
+);
 
 }
 
-export default Portfolio;
+function VideoModal() {
+  const { videoModalIsOpen, handleCloseModal, currentVideoType, currentVideoId, currentVideoThumbnail } = useContext(VideoContext);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+    if (videoModalIsOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [videoModalIsOpen, handleCloseModal]); // change from [isOpen, onClose]
+
+  return videoModalIsOpen ? (
+    <div className="modal">
+      <div className="modal-content">
+        <span className="close" onClick={handleCloseModal}>&times;</span>
+        <div className="modal-video">
+          <VideoComponent videoType={currentVideoType} videoId={currentVideoId} videoThumbnail={currentVideoThumbnail} />
+        </div>
+      </div>
+    </div>
+  ) : null;
+}
+
+
+export default function() {
+  return (
+    <VideoProvider>
+      <Portfolio />
+      <VideoModal />
+    </VideoProvider>
+  );
+}
