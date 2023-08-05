@@ -456,7 +456,7 @@ div.paragraph.newpresident-paragraph:nth-child(2) {
 }
 
 .sample-open .mask, .sample-open .unfurl {
-  opacity: 0 !important;
+  display: none !important;
 }
 
 
