@@ -36,6 +36,16 @@ export function VideoProvider({ children }) {
   );
 }
 
+function sendGAEvent(action, label) {
+  if (window.gtag) {
+    window.gtag('event', action, {
+      'event_category': 'PDF',
+      'event_label': label
+    });
+  }
+}
+
+
 function ImageContainer({ link, handleImageClick }) {
   return (
     <div className="imageContainer">
@@ -672,6 +682,7 @@ export function Portfolio() {
           text: "",
           links: [
             {label: 'This Site', url: 'https://github.com/arenasjuan/portfolio', description: ": See how the sausage is made!"},
+            {label: 'ChatGPT Malware Generation', url: 'https://drive.google.com/file/d/1ohQ8RT1r6USWh-2iKlh11CWzA5g1swoa/view?usp=drive_link', description: ": Personal experiment where I tried to get ChatGPT to generate malware"},
             {label: 'Faces', url: 'https://github.com/arenasjuan/faces', description: ": A unique tool for exploring a user's personal taste by generating a composite face from that user's preferred facial images"},
             {label: 'Autoprint', url: 'https://github.com/arenasjuan/lambda-func-autoprint', description: ": AWS Lambda function that detects upon Shipstation shipment whether a customer has a document associated with their order, then searches for and prints that document from Dropbox"},
             {label: 'Shipstation Order Processor', url: 'https://github.com/arenasjuan/lambda-func-order_processor', description: ": AWS Lambda function that processes incoming Shipstation orders"},
@@ -1068,7 +1079,15 @@ export function Portfolio() {
           <hr className="codeBar"/>
           {state.links.map((link, i) => (
             <div key={i}>
-              <a className="codeLinks" href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
+              <a 
+                className="codeLinks" 
+                href={link.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                onClick={() => sendGAEvent('click', link.label)}
+              >
+                {link.label}
+              </a>
               <span className="codeDescriptions">{link.description}</span>
             </div>
           ))}
