@@ -31,6 +31,7 @@
   width: 100vw;
   text-align: center;
   overflow: auto;
+  background-color: #ffbd7a;
 }
 
 .app canvas {
@@ -45,6 +46,7 @@ body, html {
   overflow: hidden;
   font-family: 'Futura Book';
   cursor: default;
+  background-color: #ffbd7a;
 }
 
 .contactInfo {

@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "html-react-parser": "^4.2.0",
     "kampos": "^0.8.0",
-    "lite-youtube-embed": "^0.2.0",
+    "lite-youtube-embed": "file:../../lite-youtube-embed",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
