@@ -7,10 +7,25 @@ import * as kampos from 'kampos';
 export const VideoContext = createContext();
 
 export function VideoProvider({ children }) {
+  console.log('VideoProvider render');
   const [videoModalIsOpen, setVideoModalIsOpen] = useState(false);
   const [currentVideoId, setCurrentVideoId] = useState(null);
   const [currentVideoType, setCurrentVideoType] = useState(null);
   const [currentVideoThumbnail, setCurrentVideoThumbnail] = useState(null);
+
+  useEffect(() => {
+    window.dataLayer.push({'event': 'youtubeApiReady'});
+
+    const handleYouTubeIframeAPIReady = () => {
+      window.dataLayer.push({'event': 'youtubeApiReady'});
+    };
+
+    window.onYouTubeIframeAPIReady = handleYouTubeIframeAPIReady;
+
+    return () => {
+      window.onYouTubeIframeAPIReady = null;
+    };
+  }, []);
 
   const handleTikTokClick = (link) => {
     setCurrentVideoId(link.videoId);
@@ -205,6 +220,18 @@ export function Portfolio() {
     return loadedImages;
   };
 
+  useEffect(() => {
+      const handleYouTubeIframeAPIReady = () => {
+          window.dataLayer.push({'event': 'youtubeApiReady'});
+      };
+
+      window.onYouTubeIframeAPIReady = handleYouTubeIframeAPIReady;
+
+      // Cleanup function to remove the event listener when the component unmounts
+      return () => {
+          window.onYouTubeIframeAPIReady = null;
+      };
+  }, []);
 
   useEffect(() => {
     preloadImages([
