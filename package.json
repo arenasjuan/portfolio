@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "lite-youtube-embed": "github:arenasjuan/lite-youtube-enablejsapi#master",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
