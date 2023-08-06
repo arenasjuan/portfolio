@@ -7,7 +7,6 @@ import * as kampos from 'kampos';
 export const VideoContext = createContext();
 
 export function VideoProvider({ children }) {
-  console.log('VideoProvider render');
   const [videoModalIsOpen, setVideoModalIsOpen] = useState(false);
   const [currentVideoId, setCurrentVideoId] = useState(null);
   const [currentVideoType, setCurrentVideoType] = useState(null);
