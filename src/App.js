@@ -36,16 +36,6 @@ export function VideoProvider({ children }) {
   );
 }
 
-function sendGAEvent(action, label) {
-  if (window.gtag) {
-    window.gtag('event', action, {
-      'event_category': 'PDF',
-      'event_label': label
-    });
-  }
-}
-
-
 function ImageContainer({ link, handleImageClick }) {
   return (
     <div className="imageContainer">
@@ -1079,15 +1069,7 @@ export function Portfolio() {
           <hr className="codeBar"/>
           {state.links.map((link, i) => (
             <div key={i}>
-              <a 
-                className="codeLinks" 
-                href={link.url} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                onClick={() => sendGAEvent('click', link.label)}
-              >
-                {link.label}
-              </a>
+              <a className="codeLinks" href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
               <span className="codeDescriptions">{link.description}</span>
             </div>
           ))}
