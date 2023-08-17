@@ -699,7 +699,8 @@ export function Portfolio() {
           links: [
             {label: 'This Site', url: 'https://github.com/arenasjuan/portfolio', description: ": See how the sausage is made!"},
             {label: 'ChatGPT Malware Generation', url: 'https://drive.google.com/file/d/1ohQ8RT1r6USWh-2iKlh11CWzA5g1swoa/view?usp=drive_link', description: ": Personal experiment where I tried to get ChatGPT to generate malware"},
-            {label: 'Faces', url: 'https://github.com/arenasjuan/faces', description: ": A unique tool for exploring a user's personal taste by generating a composite face from that user's preferred facial images"},
+            {label: 'Faces', url: 'https://github.com/arenasjuan/faces', description: ": A unique game for exploring a user's personal taste by generating a composite face from that user's preferred facial images"},
+            {label: 'Music Sentiment Analysis', url: 'https://github.com/arenasjuan/music_sentiment', description: ": Transformer model for music sentiment analysis using the Database for Emotional Analysis of Music "},
             {label: 'Autoprint', url: 'https://github.com/arenasjuan/lambda-func-autoprint', description: ": AWS Lambda function that detects upon Shipstation shipment whether a customer has a document associated with their order, then searches for and prints that document from Dropbox"},
             {label: 'Shipstation Order Processor', url: 'https://github.com/arenasjuan/lambda-func-order_processor', description: ": AWS Lambda function that processes incoming Shipstation orders"},
             {label: 'Bloom Lighting Project', url: 'https://github.com/arenasjuan/bloom', description: ": Final project for computer graphics class "},
