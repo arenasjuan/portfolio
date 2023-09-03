@@ -808,7 +808,7 @@ export function Portfolio() {
         break;
 
       case "Hidden QR Codes":
-          const qr_codes = Array.from({ length: 14 }, (_, i) => `/images/qr/qr ${i+1}.jpg`);
+          const qr_codes = Array.from({ length: 23 }, (_, i) => `/images/qr/qr ${i+1}.jpg`);
 
           // Convert the list of wallpapers to the required format for the links array
           const qr_links = qr_codes.map((url, i) => ({
