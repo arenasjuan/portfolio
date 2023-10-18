@@ -278,7 +278,7 @@ div.section:nth-child(2) {
   cursor: pointer;
 }
 
-div.linkWrapper:nth-child(11) > span:nth-child(1) {
+div.linkWrapper:nth-child(10) > span:nth-child(1) {
   text-indent: -2em;
   padding-left: 2em;
 }

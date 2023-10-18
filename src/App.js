@@ -406,7 +406,6 @@ export function Portfolio() {
               title: 'The Harvard Lampoon',
               sectionLinks: [
                 { text: 'Chimney Sweep'},
-                { text: 'Meet Your New President'},
                 { text: 'Mob Succession'},
                 { text: 'Yo Mama So Fat'},
                 { text: 'No More Sheriffs'},
@@ -414,6 +413,7 @@ export function Portfolio() {
                 { text: 'Ashes'},
                 { text: 'Prison Ship'},
                 { text: 'Paul McCartney Hyping Himself Up Outside of Ricky’s Pub Before Naming The Beatles – July 14, 1958, Liverpool'},
+                { text: 'Meet Your New President'},
                 { text: 'Shamu Comic'},
               ]
             },
@@ -451,29 +451,6 @@ export function Portfolio() {
           backgroundImage: images.current["/images/canvases/monkey.jpg"]
         };
         break;
-
-      case "Meet Your New President":
-        newState = {
-          parent: "Writing",
-          name: "NewPresident",
-          text: "",
-          cssTag: "newpresident",
-          title: "Meet Your New President",
-          paragraphs: [
-            "(This piece served as the intro to a parody inauguration pamphlet that I distributed with the Lampoon at Trump’s inauguration in Washington, DC)",
-            "Donald Hussein Trump was hatched December 7, 1941 in Jamaica, Queens, the Caribbean. Contrary to popular belief, Donald “the Donald” Trump was not born with his trademark hairstyle, though it was immediately grafted onto him by his father, Fred “the Donald” Trump, who had a phobia of bald people, or “the balds” (we no longer refer to baldos like this).",
-            "Donald Rodham Trump was bullied severely as a child (these bullies will be discussed in the “Meet the Cabinet” section). It’s hard to imagine a world where someone would be ridiculed for having a dumb shitty name, or an ugly face, or stupid orange hair, or lips that look like the puckering of a sphincter, or eyes that look like the puckering of a sphincter, or oily off-white skin, or a fat ugly dead shit-breathed dad, or a puckered sphincter. Despite all this, Trump managed to abstain from alcohol and cigarettes, which made him also a pussy.",
-            "As a young adult, Donald <span class='arial-word'>Arial</span> Trump attended Fordham University and the University of Pennsylvania, both now known as Trump University. He created his own major in what he called “No More Ethnic Studies”, now known as urban city planning. He also managed to dodge the draft by posing as a deformed poodle — you know the kind. He did this for the next 50 years.",
-            "After college, Trump worked for his father’s company, doing the hard job of kicking minorities out of Trump apartment complexes and converting them into the gleaming, white-only drug dens you see today. This continued either until his father died or he ran out of minorities, but let’s not dwell on that. In either case he got a lot of money and his dad died.",
-            "Trump inherited the Trump Organization and its holding company, Freddie Mo’ Bucks LLC, a Trump Company, and he turned his eye to his next get-rich-quick-at-the-expense-of-millions​​​​-of-significantly-less-affluent-Americans scheme: starting a family. He met his exotic, high-school educated wife, Kanye West, and they had five beautiful botched abortions: Jerry, Don Jr., Mungo, Barron, and Black Jerry. These are the faces that accompanied him on his historic, successful, slightly rape-y presidential campaign, delivering Donald “Get It Right — I’m Unfit for Service Only Because I’m a Poodle, Not a Goddamn Pacifist” Trump to the Oval Office.",
-            "So give it up for your 45th President of the USA: Donlad “©” Tromp"
-          ],
-          links: [],
-          image: images.current["/images/writing/inauguration.jpg"],
-          backgroundImage: images.current["/images/canvases/monkey.jpg"]
-        };
-        break;
-
 
       case "Mob Succession":
         newState = {
@@ -665,7 +642,7 @@ export function Portfolio() {
               "Oy mate — you there. Can I bum a cig? Cheers. Trouble you for a light? Absolute cheers. Oops, that’s the wrong end. Let me just tear that pesky filter off- there we are. Light her up. Ah fuck — is this a cocaine cigarette? Cheeky mate. Veeeery cheeky. I’ll see you again in 15 minutes.",
               "Okay Paul. This is it. You’re gonna enter the pub, you’re gonna walk up to the band, you’re gonna say “hey lads, I came up with a new name for the band, I’m really proud of it, I think this is the one…” and so on, you’re gonna shake hands, and then you’re gonna go out there and play the set. Just like that. Like a normal person. You’re a normal person Paul. Alright, let’s go.",
               "Paul enters the pub.",
-              "John Lennon: ...and I was thinking “The Beatles”-",
+              "John Lennon: ... and I was thinking “The Beatles”-",
               "Paul sucker punches John in the temple. He grabs the nearest glass and whips it at George’s head, taking out the young guitarist’s nose. Paul grabs John, still stunned from the punch, and throws him toward Colin Hanton. Colin dodges John’s body, but Paul rushes him and slams his head through the snare drum. John Lowe tries to hide behind his piano; Paul lunges from across the room and rips through the piano’s body, emerging from the cloud of splinters with Lowe’s neck in his hand. Paul grabs George and ties him and Lowe into a knot. Some other pub patrons notice the commotion and run at Paul. Paul dodges every punch, bottle, and knife in a blur of hair and smoke from his cigarette, at this point barely a stub. Paul takes the cigarette stump out of his mouth and flicks it at one of his attackers, fracturing the man’s C2, C3, C4, and C5 vertebrae. With a spinning whirlwind kick, Paul immobilizes all the pub patrons at once. The owner of the pub pulls a shotgun — an old Winchester, an antique — from its perch above the bar, loads it, takes aim at Paul. The pub owner asks Paul to surrender. Please. His voice cracks. Tears stream from his eyes. Paul doesn’t move, his expression vacant. The pub owner pulls the trigger — Paul takes the shot in the chest. Paul rips off his bloody dress shirt and whips it at the shotgun, pulling it from the grasp of the pub owner. Paul throws the shotgun at the pub owner with all his might, sending him flying back into a wall and pinning him to it. John, somewhat recovered at this point, throws a feeble punch at Paul — too slow. Paul catches the punch and forces John to his knees.",
               "Paul: No. No. Shut up. The band is going to be called the “Wittle Baby Buggies”. I came up with it as I was entering the pub. John. Mate. We’re going to be stars, mate."
             ],
@@ -675,7 +652,28 @@ export function Portfolio() {
           };
           break;
 
-
+      case "Meet Your New President":
+        newState = {
+          parent: "Writing",
+          name: "NewPresident",
+          text: "",
+          cssTag: "newpresident",
+          title: "Meet Your New President",
+          paragraphs: [
+            "(This piece served as the intro to a parody inauguration pamphlet that I distributed with the Lampoon at Trump’s inauguration in Washington, DC)",
+            "Donald Hussein Trump was hatched December 7, 1941 in Jamaica, Queens, the Caribbean. Contrary to popular belief, Donald “the Donald” Trump was not born with his trademark hairstyle, though it was immediately grafted onto him by his father, Fred “the Donald” Trump, who had a phobia of bald people, or “the balds” (we no longer refer to baldos like this).",
+            "Donald Rodham Trump was bullied severely as a child (these bullies will be discussed in the “Meet the Cabinet” section). It’s hard to imagine a world where someone would be ridiculed for having a dumb shitty name, or an ugly face, or stupid orange hair, or lips that look like the puckering of a sphincter, or eyes that look like the puckering of a sphincter, or oily off-white skin, or a fat ugly dead shit-breathed dad, or a puckered sphincter. Despite all this, Trump managed to abstain from alcohol and cigarettes, which made him also a pussy.",
+            "As a young adult, Donald <span class='arial-word'>Arial</span> Trump attended Fordham University and the University of Pennsylvania, both now known as Trump University. He created his own major in what he called “No More Ethnic Studies”, now known as urban city planning. He also managed to dodge the draft by posing as a deformed poodle — you know the kind. He did this for the next 50 years.",
+            "After college, Trump worked for his father’s company, doing the hard job of kicking minorities out of Trump apartment complexes and converting them into the gleaming, white-only drug dens you see today. This continued either until his father died or he ran out of minorities, but let’s not dwell on that. In either case he got a lot of money and his dad died.",
+            "Trump inherited the Trump Organization and its holding company, Freddie Mo’ Bucks LLC, a Trump Company, and he turned his eye to his next get-rich-quick-at-the-expense-of-millions​​​​-of-significantly-less-affluent-Americans scheme: starting a family. He met his exotic, high-school educated wife, Kanye West, and they had five beautiful botched abortions: Jerry, Don Jr., Mungo, Barron, and Black Jerry. These are the faces that accompanied him on his historic, successful, slightly rape-y presidential campaign, delivering Donald “Get It Right — I’m Unfit for Service Only Because I’m a Poodle, Not a Goddamn Pacifist” Trump to the Oval Office.",
+            "So give it up for your 45th President of the USA: Donlad “©” Tromp"
+          ],
+          links: [],
+          image: images.current["/images/writing/inauguration.jpg"],
+          backgroundImage: images.current["/images/canvases/monkey.jpg"]
+        };
+        break;
+      
       case "Shamu Comic":
           newState = {
             parent: "Writing",
