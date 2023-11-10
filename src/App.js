@@ -169,8 +169,6 @@ function useWindowSize() {
 }
 
 
-
-
 export function Portfolio() {
   const initialState = {
     text: "AI Art | Writing | Coding",
@@ -194,30 +192,6 @@ export function Portfolio() {
   const heightRef = useRef(null);
   const size = useWindowSize();
   const [hoveredThumbnail, setHoveredThumbnail] = useState(null);
-  
-  const preloadImages = async (urls) => {
-    let loadedImages = {};
-    let loadedCount = 0;
-
-    for (const [index, url] of urls.entries()) {
-      await new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-          loadedImages[url] = img;
-          loadedCount++;
-          setLoadProgress((loadedCount / urls.length) * 100);
-          resolve(img);
-        };
-        img.onerror = reject;
-        img.src = url;
-        if (img.complete) {
-          img.onload();
-        }
-      });
-    }
-
-    return loadedImages;
-  };
 
   useEffect(() => {
       const handleYouTubeIframeAPIReady = () => {
@@ -233,7 +207,7 @@ export function Portfolio() {
   }, []);
 
   useEffect(() => {
-    preloadImages([
+    const initialImages = [
       "/images/canvases/orange.jpg",
       "/images/canvases/pollock.jpg",
       "/images/canvases/monkey.jpg",
@@ -242,40 +216,38 @@ export function Portfolio() {
       "/images/canvases/pics.jpg",
       "/images/canvases/camera.jpg",
       "/images/writing/writing_background.jpg",
-      "/images/writing/shamu.jpg",
-      "/images/writing/chimney_sweep.JPG",
-      "/images/writing/flesh.jpg",
-      "/images/writing/greener.jpg",
-      "/images/writing/symphonia.jpg",
-      "/images/writing/west.jpg",
-      "/images/writing/inauguration.jpg",
-      "/images/writing/heyyou.jpg",
-      "/images/writing/seasons.jpg",
-      "/images/writing/new_partner.jpg",
-      "/images/writing/ashes.jpg",
-      "/images/canvases/1falling.jpg",
-      "/images/canvases/2falling.jpg",
-      "/images/thumbnails/1920s.jpg",
-      "/images/thumbnails/alley.jpg",
-      "/images/thumbnails/studio.jpg",
-      "/images/thumbnails/gnome.jpg",
-      "/images/thumbnails/flamenco.jpg",
-      "/images/thumbnails/graffiti.jpg",
-      "/images/thumbnails/colombia.jpg",
-      "/images/thumbnails/colosseum_1.jpg",
-      "/images/thumbnails/colosseum_2.jpg",
-      "/images/thumbnails/jazz_1.jpg",
-      '/images/thumbnails/bikematter.jpg',
-      '/images/thumbnails/griffith.jpg',
-      "/images/thumbnails/grey_button.png",
-      "/images/thumbnails/red_button.png"
-    ]).then(preloadedImages => {
-      images.current = preloadedImages;
-      const orangeImage = preloadedImages["/images/canvases/orange.jpg"];
-      setState(prevState => ({...prevState, backgroundImage: orangeImage}));
-      currentImageRef.current = orangeImage;
+    ];
+
+    let loadedImages = {};
+    let loadedCount = 0;
+
+    initialImages.forEach(src => {
+      const img = new Image();
+      img.onload = () => {
+        loadedImages[src] = img;
+        loadedCount++;
+        setLoadProgress((loadedCount / initialImages.length) * 100);
+
+        if (loadedCount === initialImages.length) {
+          // All initial images are loaded
+          // Update state and hide loading bar here
+          images.current = loadedImages;
+          const orangeImage = loadedImages["/images/canvases/orange.jpg"];
+          setState(prevState => ({...prevState, backgroundImage: orangeImage}));
+          currentImageRef.current = orangeImage;
+          // Optionally, hide the loading bar if it's a separate UI element
+        }
+      };
+      img.onerror = (error) => {
+        // Handle image load error if necessary
+        console.error('Error loading image:', src, error);
+      };
+      img.src = src;
+      if (img.complete) {
+        img.onload();
+      }
     });
-  }, []); 
+  }, []);
 
 
   const updateBackgroundSize = () => {
@@ -389,6 +361,22 @@ export function Portfolio() {
         break;
 
       case "Writing":
+        preloadImages([
+          "/images/writing/shamu.jpg",
+          "/images/writing/chimney_sweep.JPG",
+          "/images/writing/flesh.jpg",
+          "/images/writing/greener.jpg",
+          "/images/writing/symphonia.jpg",
+          "/images/writing/west.jpg",
+          "/images/writing/inauguration.jpg",
+          "/images/writing/heyyou.jpg",
+          "/images/writing/seasons.jpg",
+          "/images/writing/new_partner.jpg",
+          "/images/writing/ashes.jpg",
+        ]).then(loadedImages => {
+          images.current = { ...images.current, ...loadedImages };
+        });
+
         newState = {
           parent: "",
           name: "Writing",
@@ -419,7 +407,7 @@ export function Portfolio() {
             },
             {
               type: 'section',
-              title: 'My Lampoon  Issue',
+              title: 'My Lampoon Issue',
               sectionLinks: [
                 { text: 'Selected pieces from the Symphonia Fantastica #', url: 'https://www.harvardlampoon.com/read/magazines/17/', partiallyHyperlinked: true },
               ]
@@ -715,6 +703,27 @@ export function Portfolio() {
         break;
 
       case "Videos":
+        preloadImages([
+          "/images/canvases/1falling.jpg",
+          "/images/canvases/2falling.jpg",
+          "/images/thumbnails/1920s.jpg",
+          "/images/thumbnails/alley.jpg",
+          "/images/thumbnails/studio.jpg",
+          "/images/thumbnails/gnome.jpg",
+          "/images/thumbnails/flamenco.jpg",
+          "/images/thumbnails/graffiti.jpg",
+          "/images/thumbnails/colombia.jpg",
+          "/images/thumbnails/colosseum_1.jpg",
+          "/images/thumbnails/colosseum_2.jpg",
+          "/images/thumbnails/jazz_1.jpg",
+          '/images/thumbnails/bikematter.jpg',
+          '/images/thumbnails/griffith.jpg',
+          "/images/thumbnails/grey_button.png",
+          "/images/thumbnails/red_button.png",
+        ]).then(loadedImages => {
+          images.current = { ...images.current, ...loadedImages };
+        });
+
         newState = {
           parent: "AI-Art",
           name: "Videos",
