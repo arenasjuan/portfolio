@@ -670,11 +670,21 @@ export function Portfolio() {
 
 
       case "Images":
+        preloadImages([
+          ...Array.from({ length: 4 }, (_, i) => `/images/comics/Comic${i+1}.jpg`),
+          ...Array.from({ length: 23 }, (_, i) => `/images/qr/qr ${i+1}.jpg`),
+          ...Array.from({ length: 11 }, (_, i) => `/images/concepts/concept ${i+1}.jpg`),
+          ...Array.from({ length: 40 }, (_, i) => `/images/wallpapers/${i+1}.jpg`),
+          ...Array.from({ length: 9 }, (_, i) => `/images/products/product 0${i+1}.jpg`)
+        ]).then(loadedImages => {
+          images.current = { ...images.current, ...loadedImages };
+        });
+
         newState = {
           parent: "AI-Art",
           name: "Images",
           textColor: '#d8bb00',
-          textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000, -1px -1px 2px #000000",
+          textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000",
           text: "Comics | Hidden QR Codes | Children's Show Concept Art | Wallpapers | Product Images",
           links: [],
           backgroundImage: images.current["/images/canvases/pics.jpg"]
@@ -682,6 +692,7 @@ export function Portfolio() {
         currentImageRef.current = newState.backgroundImage;
         startTransition(canvas, state.backgroundImage, newState.backgroundImage, widthRef.current, heightRef.current);
         break;
+
 
       case "Comics":
           const comics = Array.from({ length: 4 }, (_, i) => `/images/comics/Comic${i+1}.jpg`);
