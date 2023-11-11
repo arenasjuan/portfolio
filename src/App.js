@@ -2,6 +2,7 @@ import 'lite-youtube-embed/src/lite-yt-embed';
 import React, { useState, useRef, useMemo, useEffect, useLayoutEffect, useCallback, useContext, createContext } from 'react';
 import { startTransition, preloadImages } from './dissolve.js';
 import { ChimneyText, MobText, YoMamaText, NoMoreSheriffsText, NewPartnerText, AshesText, PrisonShipText, PaulMcCartneyText, NewPresidentText } from './writingSampleText';
+import imagePaths from './imagePaths.json';
 import './App.css';
 import * as kampos from 'kampos';
 
@@ -667,15 +668,13 @@ export function Portfolio() {
         startTransition(canvas, state.backgroundImage, newState.backgroundImage, widthRef.current, heightRef.current);
         break;
 
-
-
       case "Images":
         preloadImages([
-          ...Array.from({ length: 4 }, (_, i) => `/images/comics/Comic${i+1}.jpg`),
-          ...Array.from({ length: 23 }, (_, i) => `/images/qr/qr ${i+1}.jpg`),
-          ...Array.from({ length: 11 }, (_, i) => `/images/concepts/concept ${i+1}.jpg`),
-          ...Array.from({ length: 40 }, (_, i) => `/images/wallpapers/${i+1}.jpg`),
-          ...Array.from({ length: 9 }, (_, i) => `/images/products/product 0${i+1}.jpg`)
+          ...imagePaths.comics,
+          ...imagePaths.qr,
+          ...imagePaths.concepts,
+          ...imagePaths.wallpapers,
+          ...imagePaths.products
         ]).then(loadedImages => {
           images.current = { ...images.current, ...loadedImages };
         });
@@ -695,94 +694,53 @@ export function Portfolio() {
 
 
       case "Comics":
-          const comics = Array.from({ length: 4 }, (_, i) => `/images/comics/Comic${i+1}.jpg`);
-
-          // Convert the list of wallpapers to the required format for the links array
-          const comic_links = comics.map((url, i) => ({
-            url,
-            type: 'image',
-          }));
-
-          newState = {
-            parent: "Images",
-            name: "Comics",
-            text: "",
-            links: comic_links,
-            backgroundImage: images.current["/images/canvases/pics.jpg"]
-          };
+        newState = {
+          parent: "Images",
+          name: "Comics",
+          text: "",
+          links: imagePaths.comics.map((url, i) => ({ url, type: 'image' })),
+          backgroundImage: images.current["/images/canvases/pics.jpg"]
+        };
         break;
 
       case "Hidden QR Codes":
-          const qr_codes = Array.from({ length: 23 }, (_, i) => `/images/qr/qr ${i+1}.jpg`);
-
-          // Convert the list of wallpapers to the required format for the links array
-          const qr_links = qr_codes.map((url, i) => ({
-            url,
-            type: 'image',
-          }));
-
-          newState = {
-            parent: "Images",
-            name: "QR_Codes",
-            text: "",
-            links: qr_links,
-            backgroundImage: images.current["/images/canvases/pics.jpg"]
-          };
+        newState = {
+          parent: "Images",
+          name: "QR_Codes",
+          text: "",
+          links: imagePaths.qr.map((url, i) => ({ url, type: 'image' })),
+          backgroundImage: images.current["/images/canvases/pics.jpg"]
+        };
         break;
 
       case "Children's Show Concept Art":
-          const concepts = Array.from({ length: 11 }, (_, i) => `/images/concepts/concept ${i+1}.jpg`);
-
-          // Convert the list of wallpapers to the required format for the links array
-          const concept_links = concepts.map((url, i) => ({
-            url,
-            type: 'image',
-          }));
-
-          newState = {
-            parent: "Images",
-            name: "Concept_Art",
-            text: "",
-            links: concept_links,
-            backgroundImage: images.current["/images/canvases/pics.jpg"]
-          };
+        newState = {
+          parent: "Images",
+          name: "Concept_Art",
+          text: "",
+          links: imagePaths.concepts.map((url, i) => ({ url, type: 'image' })),
+          backgroundImage: images.current["/images/canvases/pics.jpg"]
+        };
         break;
 
-        case "Wallpapers":
-          // Generate a list of file paths for the wallpapers
-          const wallpapers = Array.from({ length: 40 }, (_, i) => `/images/wallpapers/${i+1}.jpg`);
-
-          // Convert the list of wallpapers to the required format for the links array
-          const links = wallpapers.map((url, i) => ({
-            url,
-            type: 'image',
-          }));
-
-          newState = {
-            parent: "Images",
-            name: "Wallpapers",
-            text: "",
-            links,
-            backgroundImage: images.current["/images/canvases/pics.jpg"]
-          };
-          break;
+      case "Wallpapers":
+        newState = {
+          parent: "Images",
+          name: "Wallpapers",
+          text: "",
+          links: imagePaths.wallpapers.map((url, i) => ({ url, type: 'image' })),
+          backgroundImage: images.current["/images/canvases/pics.jpg"]
+        };
+        break;
 
       case "Product Images":
-          const products = Array.from({ length: 9 }, (_, i) => `/images/products/product 0${i+1}.jpg`);
-
-          // Convert the list of wallpapers to the required format for the links array
-          const product_links = products.map((url, i) => ({
-            url,
-            type: 'image'
-          }));
-
-          newState = {
-            parent: "Images",
-            name: "Products",
-            text: "",
-            links: product_links,
-            backgroundImage: images.current["/images/canvases/pics.jpg"]
-          };
+        newState = {
+          parent: "Images",
+          name: "Products",
+          text: "",
+          links: imagePaths.products.map((url, i) => ({ url, type: 'image' })),
+          backgroundImage: images.current["/images/canvases/pics.jpg"]
+        };
         break;
 
       default:
