@@ -576,6 +576,7 @@ export function Portfolio() {
             {label: 'ChatGPT Malware Generation', url: 'https://drive.google.com/file/d/1ohQ8RT1r6USWh-2iKlh11CWzA5g1swoa/view?usp=drive_link', description: ": Personal experiment where I tried to get ChatGPT to generate malware"},
             {label: 'Faces', url: 'https://github.com/arenasjuan/faces', description: ": A unique game for exploring a user's personal taste by generating a composite face from that user's preferred facial images"},
             {label: 'Music Sentiment Analysis', url: 'https://github.com/arenasjuan/music_sentiment', description: ": Transformer model for music sentiment analysis using the Database for Emotional Analysis of Music "},
+            {label: 'Seq2Seq Spanish', url: 'https://github.com/arenasjuan/seq2seq_spanish', description: ": Implementation of Seq2Seq paper for Spanish-to-English translation"},
             {label: 'Autoprint', url: 'https://github.com/arenasjuan/lambda-func-autoprint', description: ": AWS Lambda function for adding ecommerce order data to PostgreSQL database and printing order-related documents if necessary"},
             {label: 'Shipstation Order Processor', url: 'https://github.com/arenasjuan/lambda-func-order_processor', description: ": AWS Lambda function that processes incoming Shipstation orders"},
             {label: 'Bloom Lighting Project', url: 'https://github.com/arenasjuan/bloom', description: ": Final project for computer graphics class "},
