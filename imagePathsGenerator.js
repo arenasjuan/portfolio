@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const imageDirectories = ['comics', 'qr', 'concepts', 'wallpapers', 'products'];
+const imageDirectories = ['comics', 'qr', 'concepts'];
 const validExtensions = new Set(['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff']);
 const imageBasePath = path.join(__dirname, 'public', 'images');
 let imagePaths = {};

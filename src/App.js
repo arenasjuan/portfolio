@@ -673,9 +673,7 @@ export function Portfolio() {
         preloadImages([
           ...imagePaths.comics,
           ...imagePaths.qr,
-          ...imagePaths.concepts,
-          ...imagePaths.wallpapers,
-          ...imagePaths.products
+          ...imagePaths.concepts
         ]).then(loadedImages => {
           images.current = { ...images.current, ...loadedImages };
         });
@@ -685,7 +683,7 @@ export function Portfolio() {
           name: "Images",
           textColor: '#d8bb00',
           textShadow: "0px 0px 1px #000000, 0px 0px 2px #000000, -2px 0px 3px #000000, 0px -3px 5px #000000,  -2px -2px 1px #000000, 1px 0px 2px #000000, 0px 0px 4px #000000, 0px 0px 7px #000000",
-          text: "Comics | Hidden QR Codes | Children's Show Concept Art | Wallpapers | Product Images",
+          text: "Comics | Hidden QR Codes | Children's Show Concept Art",
           links: [],
           backgroundImage: images.current["/images/canvases/pics.jpg"]
         };
@@ -720,26 +718,6 @@ export function Portfolio() {
           name: "Concept_Art",
           text: "",
           links: imagePaths.concepts.map((url, i) => ({ url, type: 'image' })),
-          backgroundImage: images.current["/images/canvases/pics.jpg"]
-        };
-        break;
-
-      case "Wallpapers":
-        newState = {
-          parent: "Images",
-          name: "Wallpapers",
-          text: "",
-          links: imagePaths.wallpapers.map((url, i) => ({ url, type: 'image' })),
-          backgroundImage: images.current["/images/canvases/pics.jpg"]
-        };
-        break;
-
-      case "Product Images":
-        newState = {
-          parent: "Images",
-          name: "Products",
-          text: "",
-          links: imagePaths.products.map((url, i) => ({ url, type: 'image' })),
           backgroundImage: images.current["/images/canvases/pics.jpg"]
         };
         break;
